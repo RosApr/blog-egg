@@ -1,23 +1,33 @@
 <template>
     <a-layout class='login-container'>
         <a-layout-content class='login-form-container'>
-                <a-col :span="12">
-                    <LoginForm />
+                <a-col :span="12" :xs="{span: 12}" :md="{span: 12}" :lg="{span:8}">
+                    <LoginForm @loginSubmit='handleSubmit' />
                 </a-col>
         </a-layout-content>
         <a-layout-footer>
-            Footer
+            <CopyRight />
         </a-layout-footer>
     </a-layout>
 </template>
 <script>
     import LoginForm from "@/components/LoginForm"
+    import CopyRight from "@/components/Footer"
     export default {
         data() {
             return {}
         },
+        methods: {
+            async handleSubmit(loginConfig) {
+                const {data: res} = await this.$axios.post('/api/login', loginConfig)
+                if(res.status) {
+                    this.$router.push({name: 'list'})
+                }
+            }
+        },
         components: {
-            LoginForm
+            LoginForm,
+            CopyRight
         }
     }
 </script>

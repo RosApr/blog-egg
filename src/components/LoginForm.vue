@@ -1,5 +1,6 @@
 <template>
     <div class="form-container">
+        <h2>登录</h2>
         <a-form
             id="components-form-demo-normal-login"
             :form="form"
@@ -9,7 +10,7 @@
             <a-form-item>
                 <a-input
                     v-decorator="[
-                    'userName',
+                    'username',
                     { rules: [{ required: true, message: 'Please input your username!' }] }
                     ]"
                     placeholder="Username"
@@ -61,11 +62,9 @@
             handleSubmit (e) {
                 e.preventDefault();
                 const that = this
-                this.form.validateFields(async (err, values) => {
+                this.form.validateFields((err, values) => {
                     if (!err) {
-                    console.log('Received values of form: ', values);
-                    const res = await that.$axios.post('/api/login', values)
-                    console.log(res)
+                        that.$emit('loginSubmit', values)
                     }
                 });
             },

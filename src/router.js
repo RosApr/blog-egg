@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/views/Index.vue'
-import Publish from '@/views/Publish.vue'
 import Login from '@/views/Login.vue'
+
+import IndexView from '@/views/IndexView.vue'
+import List from '@/views/List.vue'
+import Publish from '@/views/Publish.vue'
 import Detail from '@/views/Detail.vue'
 
 Vue.use(Router)
@@ -12,15 +14,27 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      alias: 'index',
+      path: '/dashborad',
       name: 'index',
-      component: Index
-    },
-    {
-      path: '/publish',
-      name: 'publish',
-      component: Publish
+      component: IndexView,
+      children: [
+        {
+          path: 'index',
+          alias: '',
+          name: 'list',
+          component: List,
+        },
+        {
+          path: 'publish',
+          name: 'publish',
+          component: Publish
+        },
+        {
+          path: 'detail/:id',
+          name: 'detail',
+          component: Detail
+        },
+      ]
     },
     {
       path: '/login',
@@ -28,9 +42,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/Detail',
-      name: 'detail',
-      component: Detail
-    },
+      path: '*',
+      redirect: '/dashborad'
+    }
   ]
 })

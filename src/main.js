@@ -10,7 +10,11 @@ import {
   Icon,
   Checkbox,
   Row,
-  Col
+  Col,
+  List,
+  Avatar,
+  // Menu,
+  // Breadcrumb
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -20,6 +24,10 @@ Vue.use(Icon)
 Vue.use(Checkbox)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(List)
+Vue.use(Avatar)
+// Vue.use(Menu)
+// Vue.use(Breadcrumb)
 
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
