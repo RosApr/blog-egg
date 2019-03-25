@@ -1,9 +1,9 @@
 <template>
     <a-layout class='login-container'>
         <a-layout-content class='login-form-container'>
-                <a-col :span="12" :xs="{span: 12}" :md="{span: 12}" :lg="{span:8}">
-                    <LoginForm @loginSubmit='handleSubmit' title='登录' />
-                </a-col>
+            <a-col :span="12" :xs="{span: 12}" :md="{span: 12}" :lg="{span:8}">
+                <LoginForm @registerSubmit='handleSubmit' title='注册' />
+            </a-col>
         </a-layout-content>
         <a-layout-footer>
             <CopyRight />
@@ -18,9 +18,10 @@
             return {}
         },
         methods: {
-            async handleSubmit(loginConfig) {
-                const {data: res} = await this.$axios.post('/api/login', loginConfig)
-                if(res) {
+            async handleSubmit(registerConfig) {
+                const {data: res} = await this.$axios.post('/api/register', registerConfig)
+                console.log(registerConfig)
+                if(res.status) {
                     this.$router.push({name: 'list'})
                 }
             }

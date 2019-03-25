@@ -1,6 +1,6 @@
 <template>
     <div class="form-container">
-        <h2>登录</h2>
+        <h2>{{title}}</h2>
         <a-form
             id="components-form-demo-normal-login"
             :form="form"
@@ -44,8 +44,9 @@
                 html-type="submit"
                 class="login-form-button"
             >
-                Log in
+                {{title}}
             </a-button>
+            <a-button v-if='isLoginPage' class="login-form-button" @click='$router.push({name: "register"})'>注册</a-button>
             </a-form-item>
         </a-form>
     </div>
@@ -55,8 +56,19 @@
         data() {
             return {}
         },
+        props: {
+            title: {
+                type: String,
+                default: ''
+            }
+        },
         beforeCreate () {
             this.form = this.$form.createForm(this);
+        },
+        computed: {
+            isLoginPage() {
+                return this.title === '登录'
+            },
         },
         methods: {
             handleSubmit (e) {
@@ -64,7 +76,7 @@
                 const that = this
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        that.$emit('loginSubmit', values)
+                        that.$emit(this.title === '登录' ? 'loginSubmit' : 'registerSubmit', values)
                     }
                 });
             },
