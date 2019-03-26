@@ -47,7 +47,7 @@
         },
         methods: {
           async queryListData(pageConfig) {
-            const { data: { items, total } } = await this.$axios.get('/api/list', {params: pageConfig})
+            const { data: { data: { items, total } } } = await this.$axios.get('/api/list', {params: pageConfig})
             this.listData = items
             this.$set(this.pagination, 'total', total)
           }

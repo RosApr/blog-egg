@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import vueCookie from 'vue-cookie'
 import {
   Button,
   Layout,
@@ -28,7 +29,7 @@ Vue.use(List)
 Vue.use(Avatar)
 // Vue.use(Menu)
 // Vue.use(Breadcrumb)
-
+Vue.use(vueCookie)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 

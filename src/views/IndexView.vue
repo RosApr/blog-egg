@@ -1,7 +1,8 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header>
-            <div class="logo" />
+            <div style='color: #fff;float:right;'>{{$cookie.get('username')}}</div>
+            <a-button @click.native='logout'>退出</a-button>
         </a-layout-header>
         <a-layout-content style="padding: 40px 50px 0" class='index-view-container'>
             <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
@@ -18,6 +19,11 @@
     export default {
         data() {
             return {}
+        },
+        methods: {
+            async logout() {
+                const res = await this.$axios.post('/api/logout')
+            }
         },
         components: {
             CopyRight
