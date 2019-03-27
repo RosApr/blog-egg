@@ -20,8 +20,9 @@
         methods: {
             async handleSubmit(registerConfig) {
                 const {data: res} = await this.$axios.post('/api/register', registerConfig)
-                console.log(registerConfig)
-                if(res.status) {
+                console.log(res)
+                if(!res.msg) {
+                    this.$cookie.set('username', res.data.name)
                     this.$router.push({name: 'list'})
                 }
             }
