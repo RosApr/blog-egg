@@ -22,7 +22,7 @@
         },
         methods: {
             async handleSubmit(loginConfig) {
-                const {data: res} = await this.$axios.post('/api/login', loginConfig)
+                const { data: res } = await this.$axios.post('/api/login', loginConfig)
                 if(!res.msg) {
                     this.$cookie.set('username', res.data.name)
                     this.$router.push({name: 'list'})

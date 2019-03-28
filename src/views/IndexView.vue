@@ -1,8 +1,10 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header>
-            <div style='color: #fff;float:right;'>{{$cookie.get('username')}}</div>
-            <a-button @click.native='logout'>退出</a-button>
+            <div style='float:right;'>
+                <span style='color: #fff;margin-right: 12px;'>{{$cookie.get('username')}}</span>
+                <a-button @click.native='logout'>{{ btnText }}</a-button>
+            </div>
         </a-layout-header>
         <a-layout-content style="padding: 40px 50px 0" class='index-view-container'>
             <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
@@ -18,11 +20,28 @@
     import CopyRight from "@/components/Footer"
     export default {
         data() {
-            return {}
+            return {
+                isLogin: false
+            }
+        },
+        computed: {
+            btnText() {
+                return this.isLogin ? '退出' : '登录'
+            }
+        },
+        created() {
+            this.isLogin = !!this.$cookie.get('username')
         },
         methods: {
             async logout() {
-                const res = await this.$axios.post('/api/logout')
+                if(!this.isLogin) {
+                    this.$router.push({name: 'login'})
+                }
+                const { data: res } = await this.$axios.post('/api/logout')
+                if(res.msg == '') {
+                    this.isLogin = false
+                    this.$cookie.delete('username')
+                }
             }
         },
         components: {

@@ -14,8 +14,7 @@ import {
   Col,
   List,
   Avatar,
-  // Menu,
-  // Breadcrumb
+  Message
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -27,10 +26,16 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(List)
 Vue.use(Avatar)
-// Vue.use(Menu)
-// Vue.use(Breadcrumb)
 Vue.use(vueCookie)
+
 Vue.prototype.$axios = axios
+
+Message.config({
+  top: `200px`,
+  duration: 2,
+  maxCount: 3,
+});
+Vue.prototype.$message = Message
 Vue.config.productionTip = false
 
 new Vue({

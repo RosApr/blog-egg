@@ -52,7 +52,10 @@
                 e.preventDefault();
                 this.form.validateFields(async (err, values) => {
                     if (!err) {
-                        const {data: res} = this.$axios.post('/api/publish', values)
+                        const { data: res } = await this.$axios.post('/api/publish', values)
+                        if(res.msg != '') {
+                            return this.$message.error(res.msg)
+                        }
                         this.$router.push({name: 'list'})
                     }
                 });
