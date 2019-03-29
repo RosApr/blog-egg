@@ -9,8 +9,8 @@
         <a-list-item slot="renderItem" slot-scope="item, index">
           <a-row>
             <a-col :span='16' style='text-align: left;'>
-              <p>{{item.title}}</p>
-              <p>发布人：{{item.user}}</p>
+              <p>标题：{{item.title}}</p>
+              <p>发布时间：{{item.date}}</p>
             </a-col>
             <a-col :span='8'>
               <router-link :to='{name: "detail", params: {id: item.id}}'>more</router-link>

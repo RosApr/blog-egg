@@ -1,10 +1,9 @@
 <template>
     <div>
-        <h3>{{title}}</h3>
-        <div>{{detail}}</div>
-        <div>{{detail}}</div>
-        <div>{{date}}</div>
-        <div>{{name}}</div>
+        <h3>标题：{{title}}</h3>
+        <div>详情：{{detail}}</div>
+        <div>发布时间：{{date}}</div>
+        <div v-if='name'>发布人：{{name}}</div>
         <a-row type="flex" justify="center" align="middle">
             <a-col :span="24" style='text-align:center;'>
                 <a-button @click='$router.push({name: "list"})'>返回首页</a-button>
