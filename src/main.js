@@ -14,7 +14,8 @@ import {
   Col,
   List,
   Avatar,
-  Message
+  Message,
+  Spin
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -26,6 +27,8 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(List)
 Vue.use(Avatar)
+Vue.use(Spin)
+
 Vue.use(vueCookie)
 
 Vue.prototype.$axios = axios

@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+  import { queryPostList } from '@/assets/api'
     export default {
         data () {
           return {
@@ -47,7 +48,7 @@
         },
         methods: {
           async queryListData(pageConfig) {
-            const { data: { data: { items, total } } } = await this.$axios.get('/api/list', {params: pageConfig})
+            const { data: { data: { items, total } } } = await queryPostList(pageConfig)
             this.listData = items
             this.$set(this.pagination, 'total', total)
           }
