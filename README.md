@@ -96,14 +96,18 @@ path: /api/user
     method: login
     data: {
         account:
-        pwd:
+        password:
     }
+- 退出登录
+    type: post
+    method: logout
+    tip: token
 - 注册
     type: post
     method: register
     data: {
         account:
-        pwd:
+        password:
         nickname:
     }
     tip: 注册成功后自动成为普通用户
@@ -111,7 +115,7 @@ path: /api/user
     type: put
     method:
     data: {
-        pwd:
+        password:
     }
     tip: token
 - 修改昵称

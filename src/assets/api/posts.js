@@ -29,4 +29,6 @@ export const starPosts = ({ id, status }) => {
     return http.post(`${postsPath}/${id}/star`, status)
 }
 
-export const 
+export const search = ({ params }) => {
+    return http.get(`${postsPath}`, {params})
+}
