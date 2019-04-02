@@ -1,5 +1,5 @@
-export default {
-    postsPath: '/api/posts',
-    userPath: '/api/user',
-    categoriesPath: '/api/categories'
+export const apiPath = {
+    posts: '/api/posts',
+    user: '/api/user',
+    categories: '/api/categories'
 }
