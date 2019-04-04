@@ -13,18 +13,19 @@
 <script>
     import LoginForm from "@/components/LoginForm"
     import CopyRight from "@/components/Footer"
+    import * as userApi from '@/assets/api/user'
     export default {
         data() {
             return {}
         },
         created() {
-            console.log(this.$cookie.get('user'))
+            console.log(this.$cookie.get('nickname'))
         },
         methods: {
             async handleSubmit(loginConfig) {
-                const { data: res } = await this.$axios.post('/api/login', loginConfig)
+                const { data: res } = await userApi.login(loginConfig)
                 if(!res.msg) {
-                    this.$cookie.set('username', res.data.name, { expires: '1h' })
+                    this.$cookie.set('nickname', res.data.nickname, { expires: '1h' })
                     this.$router.push({name: 'list'})
                 }
             }

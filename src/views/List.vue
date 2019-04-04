@@ -22,38 +22,38 @@
   </div>
 </template>
 <script>
-  import { queryPostList } from '@/assets/api'
-    export default {
-        data () {
-          return {
-            listData: [],
-            pagination: {
-                onChange: (page) => {
-                    this.$set(this.pagination, 'current', page)
-                    const { pageSize, current } = this.pagination
-                    this.queryListData({size: pageSize, page: current})
-                },
-                pageSize: 5,
-                total: 0,
-                current: 1
-            }
-          }
-        },
-        created() {
-          const { pageSize, current } = this.pagination
-          this.queryListData({
-            size: pageSize,
-            page: current,
-          })
-        },
-        methods: {
-          async queryListData(pageConfig) {
-            const { data: { data: { items, total } } } = await queryPostList(pageConfig)
-            this.listData = items
-            this.$set(this.pagination, 'total', total)
-          }
+  import * as postsApi from '@/assets/api/posts'
+  export default {
+    data () {
+      return {
+        listData: [],
+        pagination: {
+            onChange: (page) => {
+                this.$set(this.pagination, 'current', page)
+                const { pageSize, current } = this.pagination
+                this.queryListData({size: pageSize, page: current})
+            },
+            pageSize: 5,
+            total: 0,
+            current: 1
         }
+      }
+    },
+    created() {
+      const { pageSize, current } = this.pagination
+      this.queryListData({
+        size: pageSize,
+        page: current,
+      })
+    },
+    methods: {
+      async queryListData(pageConfig) {
+        const { data: { data: { items, total } } } = await postsApi.queryPostsList(pageConfig)
+        this.listData = items
+        this.$set(this.pagination, 'total', total)
+      }
     }
+  }
 </script>
 <style scoped lang='less'>
 

@@ -2,7 +2,7 @@
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header>
             <div style='float:right;'>
-                <span style='color: #fff;margin-right: 12px;'>{{$cookie.get('username')}}</span>
+                <span style='color: #fff;margin-right: 12px;'>{{$cookie.get('nickname')}}</span>
                 <a-button @click.native='logout'>{{ btnText }}</a-button>
             </div>
         </a-layout-header>
@@ -30,7 +30,7 @@
             }
         },
         created() {
-            this.isLogin = !!this.$cookie.get('username')
+            this.isLogin = !!this.$cookie.get('nickname')
         },
         methods: {
             async logout() {
@@ -40,7 +40,7 @@
                 const { data: res } = await this.$axios.post('/api/logout')
                 if(res.msg == '') {
                     this.isLogin = false
-                    this.$cookie.delete('username')
+                    this.$cookie.delete('nickname')
                 }
             }
         },

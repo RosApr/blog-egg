@@ -1,5 +1,5 @@
 import http from '@/assets/httpConfig'
-import apiPath from '@/assets/api/config'
+import { apiPath } from '@/assets/api/config'
 
 export const login = (params) => {
     return http.post(`${apiPath.user}/login`, params)

@@ -40,6 +40,7 @@
     </a-form>
 </template>
 <script>
+    import * as postsApi from '@/assets/api/posts'
     export default {
         data () {
             return {
@@ -52,7 +53,7 @@
                 e.preventDefault();
                 this.form.validateFields(async (err, values) => {
                     if (!err) {
-                        const { data: res } = await this.$axios.post('/api/publish', values)
+                        const { data: res } = await postsApi.createPosts(values)
                         if(res.msg != '') {
                             return this.$message.error(res.msg)
                         }
