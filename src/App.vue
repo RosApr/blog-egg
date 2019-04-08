@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view></router-view>
     <a-spin tip='loading...' :spinning='showLoading' class='loading-container'>
       <a-icon slot="indicator" type="loading" style="font-size: 24px" spin />
     </a-spin>
@@ -8,18 +8,40 @@
 </template>
 <script>
   import bus from '@/assets/bus'
+  import CopyRight from "@/components/Footer"
   export default {
     data() {
       return {
         showLoading: false,
+        isLogin: false
       }
     },
     created() {
-      bus.$on('toggleLoadingModal', (loadingStatus) => {
-        console.log('toggleLoadingModal')
+      this.isLogin = !!this.$cookie.get('nickname')
+      bus.$on('toggleLoadingModal', (loadingStatus=true) => {
         this.showLoading = loadingStatus
       })
-    }
+    },
+    computed: {
+      btnText() {
+        return this.isLogin ? '退出' : '登录'
+      }
+    },
+    methods: {
+      async logout() {
+        if(!this.isLogin) {
+            this.$router.push({name: 'login'})
+        }
+        const { data: res } = await this.$axios.post('/api/logout')
+        if(res.msg == '') {
+            this.isLogin = false
+            this.$cookie.delete('nickname')
+        }
+      }
+    },
+    components: {
+      CopyRight
+    },
   }
 </script>
 

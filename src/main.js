@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import axios from 'axios'
 import vueCookie from 'vue-cookie'
+import utils from '@/assets/plugins'
+import store from '@/store'
 import {
   Button,
   Layout,
@@ -15,7 +16,9 @@ import {
   List,
   Avatar,
   Message,
-  Spin
+  Spin,
+  Dropdown,
+  Menu
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -28,10 +31,11 @@ Vue.use(Col)
 Vue.use(List)
 Vue.use(Avatar)
 Vue.use(Spin)
+Vue.use(Dropdown)
+Vue.use(Menu)
 
 Vue.use(vueCookie)
-
-Vue.prototype.$axios = axios
+Vue.use(utils)
 
 Message.config({
   top: `200px`,
@@ -43,5 +47,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

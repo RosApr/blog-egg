@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/Login.vue'
-import Register from '@/views/Register.vue'
 
-import IndexView from '@/views/IndexView.vue'
-import List from '@/views/List.vue'
-import Publish from '@/views/Publish.vue'
-import Detail from '@/views/Detail.vue'
+import Login from '@/views/user/Login'
+import Register from '@/views/user/Register'
+import Profile from '@/views/user/Profile'
+
+import UserView from '@/views/UserView'
+import AdminView from '@/views/AdminView'
+import CommonView from '@/views/CommonView'
+import ErrorAuth from '@/views/common/Error'
+import List from '@/views/List'
+import Publish from '@/views/Publish'
+import Detail from '@/views/Detail'
 
 Vue.use(Router)
 
@@ -17,7 +22,7 @@ export default new Router({
     {
       path: '/dashborad',
       name: 'index',
-      component: IndexView,
+      component: UserView,
       children: [
         {
           path: 'index',
@@ -38,14 +43,38 @@ export default new Router({
       ]
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login
+      path: '/account',
+      name: '',
+      component: CommonView,
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: Login
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: Register
+        },
+      ],
+      redirect: '/account/login'
     },
     {
-      path: '/register',
-      name: 'register',
-      component: Register
+      path: '/exception',
+      component: CommonView,
+      children: [
+        {
+          path: '',
+          name: 'exception',
+          component: ErrorAuth
+        }
+      ]
     },
     {
       path: '*',
