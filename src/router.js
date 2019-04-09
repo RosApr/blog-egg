@@ -8,7 +8,9 @@ import Profile from '@/views/user/Profile'
 import UserView from '@/views/UserView'
 import AdminView from '@/views/AdminView'
 import CommonView from '@/views/CommonView'
-import ErrorAuth from '@/views/common/Error'
+import Error_401 from '@/views/common/401'
+import Error_403 from '@/views/common/403'
+import Error_500 from '@/views/common/500'
 import List from '@/views/List'
 import Publish from '@/views/Publish'
 import Detail from '@/views/Detail'
@@ -70,9 +72,19 @@ export default new Router({
       component: CommonView,
       children: [
         {
-          path: '',
-          name: 'exception',
-          component: ErrorAuth
+          path: '401',
+          name: '401',
+          component: Error_401
+        },
+        {
+          path: '403',
+          name: '403',
+          component: Error_403
+        },
+        {
+          path: '500',
+          name: '500',
+          component: Error_500
         }
       ]
     },

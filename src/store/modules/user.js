@@ -4,12 +4,11 @@ import router from '@/router'
 const state = {
     userConfig: {
         nickname: ''
-        // ...
     }
 }
 
 const getters = {
-    nickname: (state) => {
+    nickname: (state) => () => {
         return Vue.cookie.get('nickname') || state.userConfig.nickname || ''
     }
 }
@@ -17,10 +16,9 @@ const getters = {
 const actions = {
     login({ commit }, payload={}) {
         userApi.login(payload).then(
-            loginRes => {
-                console.log(loginRes)
-                Vue.cookie.set('nickname', loginRes.nickname, { expires: '1h' })
-                commit('setUserState', loginRes)
+            ({ data: userProfile }) => {
+                Vue.cookie.set('nickname', userProfile.nickname, { expires: '1h' })
+                commit('setUserState', userProfile)
                 router.push({name: 'list'})
             },
             error => {
@@ -73,7 +71,6 @@ const mutations = {
             },
             
         }
-        console.log(state)
     }
 }
   

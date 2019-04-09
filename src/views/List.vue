@@ -48,7 +48,7 @@
     },
     methods: {
       async queryListData(pageConfig) {
-        const { data: { data: { items, total } } } = await postsApi.queryPostsList(pageConfig)
+        const { data: { items, total } } = await postsApi.queryPostsList(pageConfig)
         this.listData = items
         this.$set(this.pagination, 'total', total)
       }

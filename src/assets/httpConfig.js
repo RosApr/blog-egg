@@ -23,19 +23,19 @@ http.interceptors.response.use(function (response) {
     return response.data;
 }, function ({response: {data, status}}) {
     toggleLoadingModal(false)
-    switch(status) {
-        case 400:
+    // switch(status) {
+    //     case 400:
 
-            break;
-        case 401:
-            router.push({name: 'login'})
-            break;
-        case 500:
+    //         break;
+    //     case 401:
+    //         router.push({name: 'login'})
+    //         break;
+    //     case 500:
 
-            break;
-        default:
-            // to do
-    }
+    //         break;
+    //     default:
+    //         // to do
+    // }
     return Promise.reject(data);
 });
 
