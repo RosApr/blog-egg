@@ -1,12 +1,16 @@
 import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
+import VueCookie from 'vue-cookie'
+Vue.use(VueCookie)
 const state = {
     userConfig: {
-        nickname: ''
+        nickname: Vue.cookie.get('nickname') || '',
+        // id: '',
+        // role: '',
+        // account: ''
     }
 }
-
 const getters = {
     nickname: (state) => () => {
         return Vue.cookie.get('nickname') || state.userConfig.nickname || ''
@@ -30,7 +34,7 @@ const actions = {
         userApi.logout().then(
             () => {
                 Vue.cookie.delete('nickname')
-                commit('setUserState', {})
+                commit('setUserState', {nickname: ''})
             },
             error => {
                 console.log(error)
@@ -64,16 +68,13 @@ const actions = {
   
 const mutations = {
     setUserState(state, payload={}) {
-        state = {
-            userConfig: {
-                ...state.userConfig,
-                ...payload
-            },
-            
+        state.userConfig = {
+            ...state.userConfig,
+            ...payload
         }
     }
 }
-  
+
 export default {
     namespaced: true,
     state,
