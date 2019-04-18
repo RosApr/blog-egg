@@ -5,23 +5,23 @@ import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 const state = {
     userConfig: {
-        nickname: Vue.cookie.get('nickname') || '',
-        // id: '',
-        // role: '',
-        // account: ''
+        id: '',
+        role: '',
+        account: '',
+        nickname: ''
     }
 }
 const getters = {
-    nickname: (state) => () => {
-        return Vue.cookie.get('nickname') || state.userConfig.nickname || ''
-    }
+    // nickname: (state) => () => {
+    //     return Vue.cookie.get('nickname') || state.userConfig.nickname || ''
+    // }
 }
   
 const actions = {
     login({ commit }, payload={}) {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
-                Vue.cookie.set('nickname', userProfile.nickname, { expires: '1h' })
+                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', userProfile)
                 router.push({name: 'list'})
             },
@@ -33,7 +33,7 @@ const actions = {
     logout({ commit }) {
         userApi.logout().then(
             () => {
-                Vue.cookie.delete('nickname')
+                // Vue.$userProfile.del()
                 commit('setUserState', {nickname: ''})
             },
             error => {
@@ -44,7 +44,7 @@ const actions = {
     register({ commit }, payload={}) {
         userApi.register(payload).then(
             (registerRes) => {
-                Vue.cookie.set('nickname', registerRes.nickname, { expires: '1h' })
+                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', registerRes)
             },
             error => {
@@ -55,7 +55,7 @@ const actions = {
     modifyUserProfile({ commit }, payload={}) {
         userApi.modifyUserProfile(payload).then(
             (modifyUserProfileRes) => {
-                Vue.cookie.set('nickname', modifyUserProfileRes.nickname, { expires: '1h' })
+                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', modifyUserProfileRes)
             },
             error => {

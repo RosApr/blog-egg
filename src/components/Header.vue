@@ -22,9 +22,6 @@
             return {}
         },
         computed: {
-            // ...mapGetters('user', [
-            //     'nickname'
-            // ])
             ...mapState('user', {
                 nickname: state => state.userConfig.nickname
             })

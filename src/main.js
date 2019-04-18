@@ -38,7 +38,7 @@ Vue.use(vueCookie)
 Vue.use(utils)
 
 Message.config({
-  top: `200px`,
+  top: '200px',
   duration: 2,
   maxCount: 3,
 });
