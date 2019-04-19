@@ -2,6 +2,7 @@
     <a-layout-header>
         <div style='float:right;'>
             <!-- <span style='color: #fff;margin-right: 12px;'></span> -->
+            <p style='color: #fff;'>{{nickname}}</p>
             <a-dropdown v-if='nickname'>
                 <a-menu slot="overlay" @click="handleMenuClick">
                 <a-menu-item @click='page("profile")'>修改用户信息</a-menu-item>

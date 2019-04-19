@@ -7,14 +7,12 @@ Vue.use(VueCookie)
 const debug = process.env.NODE_ENV !== 'production'
 const initUserProfile = store => {
     const _userProfile = Vue.cookie.get('userProfile') || ''
-    console.log(_userProfile)
-    if(_userProfile) {
+    if(_userProfile && _userProfile != 'undefined') {
         store.replaceState(
-            Object.assign(store.state, {user: {userProfile: JSON.parse(_userProfile)}})
+            Object.assign(store.state.user, {user: { userConfig: JSON.parse(_userProfile) }})
         )
     }
     store.subscribe((mutation, state) => {
-        console.log(mutation)
         if(mutation.type.includes('user')) {
             if(mutation.type === 'user/logout') {
                 Vue.cookie.delete('userProfile')

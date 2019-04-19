@@ -12,16 +12,13 @@ const state = {
     }
 }
 const getters = {
-    // nickname: (state) => () => {
-    //     return Vue.cookie.get('nickname') || state.userConfig.nickname || ''
-    // }
+    
 }
   
 const actions = {
     login({ commit }, payload={}) {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
-                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', userProfile)
                 router.push({name: 'list'})
             },
@@ -33,8 +30,7 @@ const actions = {
     logout({ commit }) {
         userApi.logout().then(
             () => {
-                // Vue.$userProfile.del()
-                commit('setUserState', {nickname: ''})
+                commit('setUserState')
             },
             error => {
                 console.log(error)
@@ -44,7 +40,6 @@ const actions = {
     register({ commit }, payload={}) {
         userApi.register(payload).then(
             (registerRes) => {
-                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', registerRes)
             },
             error => {
@@ -55,7 +50,6 @@ const actions = {
     modifyUserProfile({ commit }, payload={}) {
         userApi.modifyUserProfile(payload).then(
             (modifyUserProfileRes) => {
-                // Vue.$userProfile.set(userProfile)
                 commit('setUserState', modifyUserProfileRes)
             },
             error => {
@@ -67,7 +61,7 @@ const actions = {
 }
   
 const mutations = {
-    setUserState(state, payload={}) {
+    setUserState(state, payload={id: '', role: '', account: '', nickname: ''}) {
         state.userConfig = {
             ...state.userConfig,
             ...payload
