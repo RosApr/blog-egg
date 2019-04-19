@@ -147,7 +147,6 @@
                 const that = this
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        return console.log(values)
                         that.modifyUserProfile(values)
                     }
                 });
