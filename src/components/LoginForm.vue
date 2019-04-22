@@ -11,9 +11,24 @@
                 <a-input
                     v-decorator="[
                     'account',
-                    { rules: [{ required: true, message: 'Please input your username!' }] }
+                    { rules: [{ required: true, message: 'Please input your account!' }] }
                     ]"
-                    placeholder="Username"
+                    placeholder="账号"
+                >
+                    <a-icon
+                    slot="prefix"
+                    type="user"
+                    style="color: rgba(0,0,0,.25)"
+                    />
+                </a-input>
+            </a-form-item>
+            <a-form-item v-if='!isLoginPage'>
+                <a-input
+                    v-decorator="[
+                    'nickname',
+                    { rules: [{ required: true, message: 'Please input your nickname!' }] }
+                    ]"
+                    placeholder="昵称"
                 >
                     <a-icon
                     slot="prefix"

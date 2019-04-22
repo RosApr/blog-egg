@@ -27,6 +27,28 @@ const actions = {
             }
         )
     },
+    register({ commit }, payload={}) {
+        userApi.register(payload).then(
+            ({ data: userProfile }) => {
+                commit('setUserState', userProfile)
+                router.push({name: 'list'})
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    },
+    modifyUserProfile({ commit }, payload={}) {
+        userApi.modifyUserProfile(payload).then(
+            ({ data: userProfile }) => {
+                commit('setUserState', userProfile)
+                router.push({name: 'list'})
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    },
     logout({ commit }) {
         userApi.logout().then(
             () => {
@@ -37,27 +59,6 @@ const actions = {
             }
         )
     },
-    register({ commit }, payload={}) {
-        userApi.register(payload).then(
-            (registerRes) => {
-                commit('setUserState', registerRes)
-            },
-            error => {
-                console.log(error)
-            }
-        )
-    },
-    modifyUserProfile({ commit }, payload={}) {
-        userApi.modifyUserProfile(payload).then(
-            (modifyUserProfileRes) => {
-                commit('setUserState', modifyUserProfileRes)
-            },
-            error => {
-                console.log(error)
-            }
-        )
-        
-    }
 }
   
 const mutations = {

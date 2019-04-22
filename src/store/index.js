@@ -9,7 +9,7 @@ const initUserProfile = store => {
     const _userProfile = Vue.cookie.get('userProfile') || ''
     if(_userProfile && _userProfile != 'undefined') {
         store.replaceState(
-            Object.assign(store.state.user, {user: { userConfig: JSON.parse(_userProfile) }})
+            Object.assign({}, store.state, {user: { userConfig: JSON.parse(_userProfile) }})
         )
     }
     store.subscribe((mutation, state) => {
