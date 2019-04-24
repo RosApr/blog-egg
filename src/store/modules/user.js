@@ -2,6 +2,7 @@ import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
 import VueCookie from 'vue-cookie'
+import * as GLOBAL from '@/assets/config'
 Vue.use(VueCookie)
 const state = {
     userConfig: {
@@ -14,13 +15,13 @@ const state = {
 const getters = {
     
 }
-  
+
 const actions = {
-    login({ commit }, payload={}) {
+    login({ commit, state }, payload={}) {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: 'list'})
+                router.push({name: `${state.userConfig.role === GLOBAL.roleUser ? 'userIndex' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -31,7 +32,7 @@ const actions = {
         userApi.register(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: 'list'})
+                router.push({name: 'userIndex'})
             },
             error => {
                 console.log(error)
@@ -42,7 +43,7 @@ const actions = {
         userApi.modifyUserProfile(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: 'list'})
+                router.push({name: `${state.userConfig.role === GLOBAL.roleUser ? 'userIndex' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)

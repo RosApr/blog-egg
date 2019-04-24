@@ -57,7 +57,7 @@
                         if(res.msg != '') {
                             return this.$message.error(res.msg)
                         }
-                        this.$router.push({name: 'list'})
+                        this.$router.push({name: 'userBlogList'})
                     }
                 });
             },

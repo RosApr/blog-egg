@@ -7,13 +7,17 @@ import Profile from '@/views/user/Profile'
 
 import UserView from '@/views/UserView'
 import AdminView from '@/views/AdminView'
+import AdminBlogsView from '@/views/admin/blogs/Index'
+import AdminCategoriesView from '@/views/admin/categories/Index'
+import AdminCategoriesDetail from '@/views/admin/categories/Detail'
+import AdminCategoriesList from '@/views/admin/categories/List'
 import CommonView from '@/views/CommonView'
-import Error_401 from '@/views/common/401'
-import Error_403 from '@/views/common/403'
-import Error_500 from '@/views/common/500'
-import List from '@/views/List'
-import Publish from '@/views/Publish'
-import Detail from '@/views/Detail'
+import Error_401 from '@/views/common/error/401'
+import Error_403 from '@/views/common/error/403'
+import Error_500 from '@/views/common/error/500'
+import UserBlogList from '@/views/user/blogs/List'
+import BlogPublish from '@/views/common/blogs/Publish'
+import BlogDetail from '@/views/common/blogs/Detail'
 
 Vue.use(Router)
 
@@ -21,29 +25,104 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // 普通用户dashboard
     {
       path: '/dashborad',
-      name: 'index',
+      name: 'userIndex',
       component: UserView,
       children: [
         {
-          path: 'index',
+          path: 'blogs',
           alias: '',
-          name: 'list',
-          component: List,
+          name: 'userBlogList',
+          component: UserBlogList,
         },
         {
           path: 'publish',
-          name: 'publish',
-          component: Publish
+          name: 'userPublish',
+          component: BlogPublish
         },
         {
           path: 'detail/:id',
-          name: 'detail',
-          component: Detail
+          name: 'userDetail',
+          component: BlogDetail
         },
       ]
     },
+    // 管理员 danshborad
+    {
+      path: '/admin',
+      name: 'adminIndex',
+      component: AdminView,
+      children: [
+        {
+          path: 'blogs',
+          alias: '',
+          name: 'adminBlog',
+          component: AdminBlogsView,
+          children: [
+            {
+              path: 'list',
+              alias: '',
+              name: 'adminBlogList',
+              component: UserBlogList
+            },
+            {
+              path: 'detail',
+              name: 'adminDetail',
+              component: UserBlogList
+            },
+            {
+              path: 'update',
+              name: 'adminBlogUpdate',
+              component: UserBlogList
+            },
+          ]
+        },
+        {
+          path: 'categories',
+          name: 'adminCategories',
+          component: AdminCategoriesView,
+          children: [
+            {
+              path: 'list',
+              alias: '',
+              name: 'adminCategoriesList',
+              component: AdminCategoriesList
+            },
+            {
+              path: 'add',
+              name: 'adminCategoriesAdd',
+              component: AdminCategoriesDetail
+            },
+            {
+              path: 'detail',
+              name: 'adminCategoriesDetail',
+              component: AdminCategoriesDetail
+            },
+            {
+              path: 'update',
+              name: 'adminCategoriesUpdate',
+              component: AdminCategoriesDetail
+            },
+          ]
+        },
+        {
+          path: 'users',
+          name: 'adminUser',
+          component: BlogPublish,
+          children: [
+            {
+              path: 'list',
+              alias: '',
+              name: 'adminUserList',
+              component: UserBlogList
+            }
+          ]
+        }
+      ]
+    },
+    // 用户管理
     {
       path: '/account',
       name: '',
@@ -67,6 +146,7 @@ export default new Router({
       ],
       redirect: '/account/login'
     },
+    // error
     {
       path: '/exception',
       component: CommonView,

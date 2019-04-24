@@ -38,5 +38,7 @@
     }
 </script>
 <style lang='less' scoped>
-
+    .ant-layout-header {
+        padding: 0 24px!important;
+    }
 </style>

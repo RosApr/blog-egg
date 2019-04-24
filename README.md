@@ -55,8 +55,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 - 登录 ✓
 - 注册 ✓
-- 修改密码
-- 修改昵称
+- 修改密码 ✓
+- 修改昵称 ✓
 
 权限
 

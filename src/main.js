@@ -4,6 +4,7 @@ import router from './router'
 import vueCookie from 'vue-cookie'
 import utils from '@/assets/plugins'
 import store from '@/store'
+import Vuebar from 'vuebar'
 import {
   Button,
   Layout,
@@ -36,6 +37,7 @@ Vue.use(Menu)
 
 Vue.use(vueCookie)
 Vue.use(utils)
+Vue.use(Vuebar);
 
 Message.config({
   top: '200px',

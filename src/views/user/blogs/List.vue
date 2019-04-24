@@ -18,7 +18,7 @@
           </a-row>
         </a-list-item>
     </a-list>
-    <a-button type="primary" @click='$router.push({name: "publish"})' size='large'>发布</a-button>
+    <a-button type="primary" @click='$router.push({name: "userPublish"})' size='large'>发布</a-button>
   </div>
 </template>
 <script>

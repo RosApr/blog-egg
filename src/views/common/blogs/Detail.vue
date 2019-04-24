@@ -6,7 +6,7 @@
         <div v-if='name'>发布人：{{name}}</div>
         <a-row type="flex" justify="center" align="middle">
             <a-col :span="24" style='text-align:center;'>
-                <a-button @click='$router.push({name: "list"})'>返回首页</a-button>
+                <a-button @click='$router.push({name: "userBlogList"})'>返回首页</a-button>
             </a-col>
         </a-row>
     </div>

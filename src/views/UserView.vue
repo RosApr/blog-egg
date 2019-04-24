@@ -1,7 +1,7 @@
 <template>
     <a-layout id="components-layout-demo-top" class="layout">
         <Header />
-        <a-layout-content style="padding: 40px 50px 0" class='index-view-container'>
+        <a-layout-content class='index-view-container'>
             <div :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
                 <router-view></router-view>
             </div>
