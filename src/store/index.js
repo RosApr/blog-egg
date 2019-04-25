@@ -1,6 +1,8 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import user from './modules/user'
+import blog from './modules/blog'
+import categories from './modules/blog'
 import VueCookie from 'vue-cookie'
 Vue.use(Vuex)
 Vue.use(VueCookie)
@@ -25,7 +27,9 @@ const initUserProfile = store => {
 
 export default new Vuex.Store({
     modules: {
-        user
+        user,
+        blog,
+        categories
     },
     strict: debug,
     plugins: [ initUserProfile ]

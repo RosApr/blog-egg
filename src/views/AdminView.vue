@@ -21,14 +21,14 @@
           </a-menu-item>
         </a-menu>
       </a-layout-sider>
-      <a-layout style="padding: 0">
+      <a-layout style="padding:0">
         <a-layout-content ref='scrollDom'
             v-bar="{ preventParentScroll: true, scrollThrottle: 30}"
             class='admin-layout-router-container'
             :style="{ background: '#fff', margin: '24px 24px 0', minHeight: '280px' }"
         >
             <div>
-                <router-view></router-view>
+                <router-view class='router-view'></router-view>
             </div>
         </a-layout-content>
         <a-layout-footer>
@@ -73,6 +73,9 @@
         height: 100%;
         .admin-layout-content-container {
             height: calc( 100% - 64px);
+            .router-view {
+              padding: 20px;
+            }
         }
     }
 </style>

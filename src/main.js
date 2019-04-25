@@ -19,7 +19,11 @@ import {
   Message,
   Spin,
   Dropdown,
-  Menu
+  Menu,
+  Table,
+  Divider,
+  Popconfirm,
+  // Pagination
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -34,6 +38,10 @@ Vue.use(Avatar)
 Vue.use(Spin)
 Vue.use(Dropdown)
 Vue.use(Menu)
+Vue.use(Table)
+Vue.use(Divider)
+Vue.use(Popconfirm)
+// Vue.use(Pagination)
 
 Vue.use(vueCookie)
 Vue.use(utils)

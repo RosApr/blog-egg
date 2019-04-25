@@ -8,6 +8,7 @@ import Profile from '@/views/user/Profile'
 import UserView from '@/views/UserView'
 import AdminView from '@/views/AdminView'
 import AdminBlogsView from '@/views/admin/blogs/Index'
+import AdminBlogsList from '@/views/admin/blogs/List'
 import AdminCategoriesView from '@/views/admin/categories/Index'
 import AdminCategoriesDetail from '@/views/admin/categories/Detail'
 import AdminCategoriesList from '@/views/admin/categories/List'
@@ -65,7 +66,7 @@ export default new Router({
               path: 'list',
               alias: '',
               name: 'adminBlogList',
-              component: UserBlogList
+              component: AdminBlogsList
             },
             {
               path: 'detail',

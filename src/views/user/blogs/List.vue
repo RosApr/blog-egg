@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-  import * as postsApi from '@/assets/api/posts'
+  import * as postsApi from '@/assets/api/blogs'
   export default {
     data () {
       return {
