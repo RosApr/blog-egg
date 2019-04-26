@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-  import * as postsApi from '@/assets/api/blogs'
+  import postsApi from '@/assets/api/blogs'
   export default {
     data () {
       return {
@@ -31,9 +31,9 @@
             onChange: (page) => {
                 this.$set(this.pagination, 'current', page)
                 const { pageSize, current } = this.pagination
-                this.queryListData({size: pageSize, page: current})
+                this.queryListData({pageSize, current})
             },
-            pageSize: 5,
+            pageSize: 10,
             total: 0,
             current: 1
         }

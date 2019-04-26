@@ -1,5 +1,5 @@
 <template>
-    <a-table :columns="columns" :dataSource="list" @change='showBlogDetail' :pagination='pagination' rowKey='id' bordered>
+    <a-table :columns="columns" :dataSource="list" @change='queryBlogList' :pagination='pagination' rowKey='id' bordered>
         <template slot="operation" slot-scope="text, record, index">
             <div class='editable-row-operations'>
                 <a-button type='default' @click='showBlogDetail(record.id)'>查看</a-button>
@@ -54,8 +54,7 @@ export default {
       ])
   },
   created() {
-      console.log(this.pagination)
-      this.queryBlogList()
+      this.queryBlogList(this.pagination)
   },
   methods: {
       ...mapActions('blog', [

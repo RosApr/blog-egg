@@ -20,7 +20,7 @@ const getters = {
 
 const actions = {
     queryBlogList({ commit, state }, payload = {}) {
-        blogApi.queryPostsList(payload)
+        blogApi.queryPostsList({current: payload.current, pageSize: payload.pageSize})
             .then(
                 ({}) => {
 
