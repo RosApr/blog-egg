@@ -16,71 +16,71 @@
 <script>
     import { mapActions, mapState, mapMutations } from 'vuex'
     import { timeFormat } from '@/assets/config'
-export default {
-    data () {
-        const columns = [{
-            title: '名称',
-            dataIndex: 'title',
-            width: '25%',
-            scopedSlots: { customRender: 'title' }
-        },{
-            title: '博客分类',
-            dataIndex: 'category',
-            width: '10%',
-            scopedSlots: { customRender: 'category' }
-        }, {
-            title: '发布人',
-            dataIndex: 'nickname',
-            width: '15%',
-            scopedSlots: { customRender: 'nickname' }
-        }, {
-            title: '发布日期',
-            dataIndex: 'date',
-            width: '20%',
-            customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
-        }, {
-            title: '浏览量',
-            dataIndex: 'pv',
-            width: '8%',
-            scopedSlots: { customRender: 'pv' }
-        }, {
-            title: '操作',
-            dataIndex: 'operation',
-            scopedSlots: { customRender: 'operation' }
-        }]
-        return {
-            columns
+    export default {
+        data () {
+            const columns = [{
+                title: '名称',
+                dataIndex: 'title',
+                width: '25%',
+                scopedSlots: { customRender: 'title' }
+            },{
+                title: '博客分类',
+                dataIndex: 'category',
+                width: '10%',
+                scopedSlots: { customRender: 'category' }
+            }, {
+                title: '发布人',
+                dataIndex: 'nickname',
+                width: '15%',
+                scopedSlots: { customRender: 'nickname' }
+            }, {
+                title: '发布日期',
+                dataIndex: 'date',
+                width: '20%',
+                customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
+            }, {
+                title: '浏览量',
+                dataIndex: 'pv',
+                width: '8%',
+                scopedSlots: { customRender: 'pv' }
+            }, {
+                title: '操作',
+                dataIndex: 'operation',
+                scopedSlots: { customRender: 'operation' }
+            }]
+            return {
+                columns
+            }
+        },
+    computed: {
+        ...mapState('blog', [
+            'list', 'pagination'
+        ]),
+    },
+    created() {
+        this.queryBlogList()
+    },
+    methods: {
+        ...mapActions('blog', [
+            'queryBlogList',
+            'queryBlogDetail',
+            'delBlog'
+        ]),
+        ...mapMutations('blog', [
+            'updatePagination'
+        ]),
+        handlePaginationChange(pagination) {
+            this.updatePagination(pagination)
+            this.queryBlogList()
+        },
+        showBlogDetail(blogId) {
+            this.$router.push({name: 'adminBlogDetail', params: {id: blogId}})
+        },
+        modifyBlogDetail(blogId) {
+            this.$router.push({name: 'adminBlogUpdate', params: {id: blogId}})
         }
     },
-  computed: {
-      ...mapState('blog', [
-          'list', 'pagination'
-      ]),
-  },
-  created() {
-    this.queryBlogList()
-  },
-  methods: {
-      ...mapActions('blog', [
-          'queryBlogList',
-          'queryBlogDetail',
-          'delBlog'
-      ]),
-      ...mapMutations('blog', [
-          'updatePagination'
-      ]),
-      handlePaginationChange(pagination) {
-        this.updatePagination(pagination)
-        this.queryBlogList()
-      },
-      showBlogDetail(blogId) {
-        this.$router.push({name: 'adminDetail', params: {id: blogId}})
-      },
-      modifyBlogDetail(blogId) {
-          
-      }
-  },
-}
+    }
 </script>
 <style scoped lang='less'>
     .editable-row-operations a {

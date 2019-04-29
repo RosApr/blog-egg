@@ -40,12 +40,17 @@ export default new Router({
         },
         {
           path: 'publish',
-          name: 'userPublish',
+          name: 'blogPublish',
           component: BlogPublish
         },
         {
           path: 'detail/:id',
-          name: 'userDetail',
+          name: 'blogDetail',
+          component: BlogDetail
+        },
+        {
+          path: 'update/:id',
+          name: 'blogUpdate',
           component: BlogDetail
         },
       ]
@@ -70,13 +75,13 @@ export default new Router({
             },
             {
               path: 'detail/:id',
-              name: 'adminDetail',
+              name: 'adminBlogDetail',
               component: BlogDetail
             },
             {
-              path: 'update',
+              path: 'update/:id',
               name: 'adminBlogUpdate',
-              component: UserBlogList
+              component: BlogPublish
             },
           ]
         },
@@ -97,12 +102,12 @@ export default new Router({
               component: AdminCategoriesDetail
             },
             {
-              path: 'detail',
+              path: 'detail/:id',
               name: 'adminCategoriesDetail',
               component: AdminCategoriesDetail
             },
             {
-              path: 'update',
+              path: 'update/:id',
               name: 'adminCategoriesUpdate',
               component: AdminCategoriesDetail
             },

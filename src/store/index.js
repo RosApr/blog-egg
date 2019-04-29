@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import user from './modules/user'
 import blog from './modules/blog'
-import categories from './modules/blog'
+import categories from './modules/categories'
 import VueCookie from 'vue-cookie'
 Vue.use(Vuex)
 Vue.use(VueCookie)

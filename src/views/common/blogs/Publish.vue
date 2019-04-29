@@ -11,7 +11,8 @@
         <a-input
             v-decorator="[
             'title',
-            {rules: [{ required: true, message: 'Please input your title!' }]}
+            {rules: [{ required: true, message: 'Please input your title!' }],
+            initialValue: detail.title || ''}
             ]"
         />
         </a-form-item>
@@ -23,7 +24,8 @@
         <a-input
             v-decorator="[
             'content',
-            {rules: [{ required: true, message: 'Please input your content!' }]}
+            {rules: [{ required: true, message: 'Please input your content!' }],
+            initialValue: detail.content || ''}
             ]"
         />
         </a-form-item>
@@ -34,13 +36,13 @@
             type="primary"
             html-type="submit"
         >
-            Submit
+            确定
         </a-button>
         </a-form-item>
     </a-form>
 </template>
 <script>
-    import * as postsApi from '@/assets/api/blogs'
+    import { mapState, mapActions } from 'vuex'
     export default {
         data () {
             return {
@@ -48,16 +50,24 @@
                 form: this.$form.createForm(this),
             };
         },
+        computed: {
+            ...mapState('blog', [
+                'detail'
+            ])
+        },
+        created() {
+            this.queryBlogDetail({id: this.$route.params.id})
+        },
         methods: {
+            ...mapActions('blog', [
+                'queryBlogDetail',
+                'modifyBlog'
+            ]),
             handleSubmit (e) {
                 e.preventDefault();
                 this.form.validateFields(async (err, values) => {
                     if (!err) {
-                        const { data: res } = await postsApi.createPosts(values)
-                        if(res.msg != '') {
-                            return this.$message.error(res.msg)
-                        }
-                        this.$router.push({name: 'userBlogList'})
+                        this.modifyBlog({...values, ...{id: this.detail.id}})
                     }
                 });
             },

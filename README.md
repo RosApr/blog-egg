@@ -42,7 +42,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - 分类
 - 检索
 - 评论
-- 浏览量
+- 浏览量 ✓
 - 收藏
 - 取消收藏
 - 发布 ✓

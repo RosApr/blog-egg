@@ -1,14 +1,14 @@
 import categoryApi from '@/assets/api/categories'
 import Vue from 'vue'
 import router from '@/router'
-import * as GLOBAL from '@/assets/config'
-
+import { pagination } from '@/assets/config'
 const state = {
     list: [],
-    total: 0,
+    pagination,
     detail: {
         id: '',
-        name: ''
+        name: '',
+        date: ''
     }
 }
 
@@ -18,21 +18,23 @@ const getters = {
 
 const actions = {
     queryCategoryList({ commit, state }, payload = {}) {
-        categoryApi.queryCategoriesList(payload)
+        const { pagination: { current, pageSize }} = state
+        categoryApi.queryCategoriesList({current, pageSize})
             .then(
-                ({}) => {
-
+                ({msg, data: { items, total }}) => {
+                    commit('updateList', {items})
+                    commit('updatePagination', {total})
                 },
                 error => {
 
                 }
             )
     },
-    queryCategoryDetail({ commit ,state}, payload = {}) {
+    queryCategoryDetail({ commit ,state }, payload = {}) {
         categoryApi.queryCategoriesDetail(payload)
             .then(
-                ({}) => {
-
+                ({msg, data}) => {
+                    commit('updateDetail', data)
                 },
                 error => {
 
@@ -42,11 +44,11 @@ const actions = {
     createCategory({ commit, state }, payload = {}) {
         categoryApi.createCategories(payload)
             .then(
-                ({}) => {
-
+                ({ msg }) => {
+                    router.push({name: 'adminCategoriesList'})
                 },
                 error => {
-
+                    
                 }
             )
     },
@@ -54,18 +56,19 @@ const actions = {
         categoryApi.modifyCategories(payload)
             .then(
                 ({}) => {
-
+                    router.push({name: 'adminCategoriesList'})
                 },
                 error => {
 
                 }
             )
     },
-    delCategory({ commit, state }, payload = {}) {
+    delCategory({ commit, state, dispatch }, payload = {}) {
         categoryApi.delCategories(payload)
             .then(
                 ({}) => {
-
+                    commit('updatePagination')
+                    dispatch('queryCategoryList')
                 },
                 error => {
 
@@ -75,16 +78,26 @@ const actions = {
 }
 
 const mutations = {
-    storeList(state, payload = {items: [], total: 0}){
+    updateList(state, payload = {items: [], total: 0}){
         state.list = payload.items
-        state.total = payload.total
     },
-    storeDetail(state, payload = {
+    delCategory(state, { id } = { id: 1}) {
+        const categoryIndex = state.list.findIndex(item => item.id == id)
+        state.list.splice(categoryIndex, 1)
+    },
+    updateDetail(state, payload = {
         id: '',
-        name: ''
+        name: '',
+        date: ''
     }) {
         state.detail = {
             ...state.detail,
+            ...payload
+        }
+    },
+    updatePagination(state, payload = { current: 1, pageSize: 10}) {
+        state.pagination = {
+            ...state.pagination,
             ...payload
         }
     }

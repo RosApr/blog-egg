@@ -2,7 +2,7 @@ const axios = require('axios')
 import bus from '@/assets/bus'
 import router from '@/router'
 const http = axios.create()
-
+import VueInstance from '@/main'
 /**
  *  400 参数错误 提示错误信息
  *  401 权限错误 跳转登录
@@ -28,7 +28,10 @@ http.interceptors.response.use(function (response) {
             router.push({name: '401'})
             break;
         case 403:
-        router.push({name: '403'})
+            router.push({name: '403'})
+            break;
+        case 400:
+            VueInstance.$message.error(data.msg)
             break;
         case 500:
             router.push({name: '500'})
@@ -36,7 +39,7 @@ http.interceptors.response.use(function (response) {
         default:
             // to do
     }
-    return Promise.reject(data);
+    return Promise.reject({data, status});
 });
 
 export default http

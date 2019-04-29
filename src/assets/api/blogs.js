@@ -12,7 +12,7 @@ export default {
         return http.post(`${apiPath.posts}`, { params })
     },
     modifyPosts: ({ id, ...params }) => {
-        return http.put(`${apiPath.posts}/${id}`, params)
+        return http.put(`${apiPath.posts}/${id}`, {...{id}, ...params })
     },
     delPosts: ({ id }) => {
         return http.delete(`${apiPath.posts}/${id}`)

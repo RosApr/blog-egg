@@ -60,7 +60,7 @@ const actions = {
         blogApi.modifyPosts(payload)
             .then(
                 ({}) => {
-
+                    router.go(-1)
                 },
                 error => {
 
