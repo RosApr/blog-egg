@@ -69,9 +69,9 @@ export default new Router({
               component: AdminBlogsList
             },
             {
-              path: 'detail',
+              path: 'detail/:id',
               name: 'adminDetail',
-              component: UserBlogList
+              component: BlogDetail
             },
             {
               path: 'update',

@@ -10,13 +10,13 @@
           :style="{ height: '100%', borderRight: 0, paddingTop: '24px' }"
           @click='handleMenuClick'
         >
-          <a-menu-item key="blogs" pathName='adminBlog'>
+          <a-menu-item key="blogs" pathName='adminBlogList'>
             <span><a-icon type="table" />文章管理</span>
           </a-menu-item>
-          <a-menu-item key="categories" pathName='adminCategories'>
+          <a-menu-item key="categories" pathName='adminCategoriesList'>
             <span><a-icon type="profile" />类目管理</span>
           </a-menu-item>
-          <a-menu-item key="users" pathName='adminUser'>
+          <a-menu-item key="users" pathName='adminUserList'>
             <span><a-icon type="user" />用户管理</span>
           </a-menu-item>
         </a-menu>

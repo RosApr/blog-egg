@@ -1,16 +1,17 @@
 import blogApi from '@/assets/api/blogs'
 import Vue from 'vue'
 import router from '@/router'
+import { pagination } from '@/assets/config'
 const state = {
     list: [],
-    total: 0,
+    pagination,
     detail: {
         id: '',
         title: '',
         content: '',
         date: '',
         pv: '',
-        owner: '',
+        nickname: '',
         category: ''
     }
 }
@@ -19,22 +20,25 @@ const getters = {
 }
 
 const actions = {
-    queryBlogList({ commit, state }, payload = {}) {
-        blogApi.queryPostsList({current: payload.current, pageSize: payload.pageSize})
+    queryBlogList({ commit, state }) {
+        const {pagination: { current, pageSize }} = state
+        blogApi.queryPostsList({ current, pageSize })
             .then(
-                ({}) => {
-
+                ({ msg, data: { items, total }}) => {
+                    commit('updateList', {items})
+                    commit('updatePagination', {total})
                 },
                 error => {
 
                 }
             )
     },
-    queryBlogDetail({ commit , state }, payload = {}) {
+    queryBlogDetail({ commit , state }, payload = {id: 1}) {
         blogApi.queryPostsDetail(payload)
             .then(
-                ({}) => {
-
+                ({ msg, data }) => {
+                    console.log(data)
+                    commit('updateDetail', data)
                 },
                 error => {
                     
@@ -63,22 +67,23 @@ const actions = {
                 }
             )
     },
-    delBlog({ commit, state }, payload = {}) {
-        blogApi.delPosts
+    delBlog({ commit, state, dispatch }, payload = {id: 1}) {
+        blogApi.delPosts(payload)
             .then(
                 ({}) => {
-
+                    commit('updatePagination')
+                    dispatch('queryBlogList')
                 },
                 error => {
 
                 }
             )
     },
-    addBlogPv({ commit , state }, payload = {}) {
+    addBlogPv({ commit , state }, payload = {id: 1}) {
         blogApi.addPostsPv(payload)
             .then(
                 ({}) => {
-
+                    
                 },
                 error => {
 
@@ -88,11 +93,21 @@ const actions = {
 }
 
 const mutations = {
-    storeList(state, payload = {items: [], total: 0}) {
+    updateList(state, payload = {items: [], total: 0}) {
         state.list = payload.items
-        state.total = payload.total
     },
-    storeDetail(state, payload = {
+    delBlog(state, {id} = {id: 1}) {
+        const blogIndex = state.list.findIndex(item => item.id == id)
+        state.list.splice(blogIndex, 1)
+        
+    },
+    updatePagination(state, payload = {current: 1, pageSize: 10}) {
+        state.pagination = {
+            ...state.pagination,
+            ...payload
+        }
+    },
+    updateDetail(state, payload = {
         id: '',
         title: '',
         content: '',

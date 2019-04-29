@@ -1,39 +1,41 @@
 <template>
     <div>
-        <h3>标题：{{title}}</h3>
-        <div>详情：{{detail}}</div>
-        <div>发布时间：{{date}}</div>
-        <div v-if='name'>发布人：{{name}}</div>
+        <h3>标题：{{detail.title}}</h3>
+        <div>详情：{{detail.content}}</div>
+        <div>发布时间：{{detail.date | moment(timeFormat)}}</div>
+        <div>浏览量：{{detail.pv}}次</div>
+        <div v-if='detail.nickname'>发布人：{{detail.nickname}}</div>
         <a-row type="flex" justify="center" align="middle">
             <a-col :span="24" style='text-align:center;'>
-                <a-button @click='$router.push({name: "userBlogList"})'>返回首页</a-button>
+                <a-button @click='$router.go(-1)'>返回首页</a-button>
             </a-col>
         </a-row>
     </div>
 </template>
 <script>
+    import { timeFormat } from '@/assets/config'
+    import { mapState, mapActions } from 'vuex'
     export default {
         data() {
             return {
-                title: '',
-                detail: '',
-                date: '',
-                name: '',
+                timeFormat
             }
+        },
+        computed: {
+            ...mapState('blog', [
+                'detail'
+            ])
         },
         created() {
             const { id } = this.$route.params
-            this.queryDetail(id)
+            this.queryBlogDetail({id})
+            this.addBlogPv({id})
         },
         methods: {
-            async queryDetail(id) {
-                const { data: { data: { title, detail, name, date }} } = await this.$axios.get(`/api/detail/${id}`)
-                this.title = title
-                this.detail = detail
-                this.name = name
-                this.date = date
-
-            }
+            ...mapActions('blog', [
+                'queryBlogDetail',
+                'addBlogPv'
+            ])
         }
     }
 </script>

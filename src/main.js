@@ -5,6 +5,8 @@ import vueCookie from 'vue-cookie'
 import utils from '@/assets/plugins'
 import store from '@/store'
 import Vuebar from 'vuebar'
+import VueMoment from 'vue-moment'
+
 import {
   Button,
   Layout,
@@ -43,15 +45,16 @@ Vue.use(Divider)
 Vue.use(Popconfirm)
 // Vue.use(Pagination)
 
+Vue.use(VueMoment)
 Vue.use(vueCookie)
 Vue.use(utils)
-Vue.use(Vuebar);
+Vue.use(Vuebar)
 
 Message.config({
   top: '200px',
   duration: 2,
-  maxCount: 3,
-});
+  maxCount: 3
+})
 Vue.prototype.$message = Message
 Vue.config.productionTip = false
 
