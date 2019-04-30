@@ -13,5 +13,11 @@ export default {
     },
     modifyUserProfile: (params) => {
         return http.put(`${apiPath.user}`, params)
-    }
+    },
+    queryUserList: (params) => {
+        return http.get(`${apiPath.user}/list`, {params})
+    },
+    resetUserPwd: (params) => {
+        return http.put(`${apiPath.user}/resetPwd`, params)
+    },
 }

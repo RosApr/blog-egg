@@ -2,26 +2,51 @@ import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
 import VueCookie from 'vue-cookie'
-import * as GLOBAL from '@/assets/config'
+import { pagination, roleUser } from '@/assets/config'
 Vue.use(VueCookie)
 const state = {
+    pagination,
     userConfig: {
         id: '',
         role: '',
         account: '',
         nickname: ''
-    }
+    },
+    list: []
 }
 const getters = {
     
 }
 
 const actions = {
+    resetUserPwd({ commit, state}, { id } = {}) {
+        userApi.resetUserPwd({id})
+            .then(
+                () => {
+
+                },
+                error => {
+
+                }
+            )
+    },
+    queryUserList({ commit, state }, payload = {}) {
+        const { pagination: { current, pageSize }} = state
+        userApi.queryUserList({ current, pageSize })
+            .then(
+                ({ msg, data: { items, total }}) => {
+                    commit('updateList', {items})
+                    commit('updatePagination', {total})
+                }, error => {
+
+                }
+            )
+    },
     login({ commit, state }, payload={}) {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: `${state.userConfig.role === GLOBAL.roleUser ? 'userIndex' : 'adminBlogList'}`})
+                router.push({name: `${state.userConfig.role === roleUser ? 'userIndex' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -43,7 +68,7 @@ const actions = {
         userApi.modifyUserProfile(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: `${state.userConfig.role === GLOBAL.roleUser ? 'userIndex' : 'adminBlogList'}`})
+                router.push({name: `${state.userConfig.role === roleUser ? 'userIndex' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -68,7 +93,16 @@ const mutations = {
             ...state.userConfig,
             ...payload
         }
-    }
+    },
+    updateList(state, payload = {items: [], total: 0}) {
+        state.list = payload.items
+    },
+    updatePagination(state, payload = {current: 1, pageSize: 10}) {
+        state.pagination = {
+            ...state.pagination,
+            ...payload
+        }
+    },
 }
 
 export default {

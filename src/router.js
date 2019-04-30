@@ -6,16 +6,22 @@ import Register from '@/views/user/Register'
 import Profile from '@/views/user/Profile'
 
 import UserView from '@/views/UserView'
+
 import AdminView from '@/views/AdminView'
 import AdminBlogsView from '@/views/admin/blogs/Index'
 import AdminBlogsList from '@/views/admin/blogs/List'
+
 import AdminCategoriesView from '@/views/admin/categories/Index'
 import AdminCategoriesDetail from '@/views/admin/categories/Detail'
 import AdminCategoriesList from '@/views/admin/categories/List'
+
+import AdminUserView from '@/views/admin/user/Index'
+import AdminUserList from '@/views/admin/user/List'
 import CommonView from '@/views/CommonView'
 import Error_401 from '@/views/common/error/401'
 import Error_403 from '@/views/common/error/403'
 import Error_500 from '@/views/common/error/500'
+
 import UserBlogList from '@/views/user/blogs/List'
 import BlogPublish from '@/views/common/blogs/Publish'
 import BlogDetail from '@/views/common/blogs/Detail'
@@ -116,13 +122,13 @@ export default new Router({
         {
           path: 'users',
           name: 'adminUser',
-          component: BlogPublish,
+          component: AdminUserView,
           children: [
             {
               path: 'list',
               alias: '',
               name: 'adminUserList',
-              component: UserBlogList
+              component: AdminUserList
             }
           ]
         }

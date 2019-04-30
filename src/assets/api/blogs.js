@@ -24,6 +24,6 @@ export default {
         return http.post(`${apiPath.posts}/${id}/favorite`, status)
     },
     search: ({ params }) => {
-        return http.get(`${apiPath.posts}`, {params})
+        return http.get(`${apiPath.posts}`, { params })
     }
 }
