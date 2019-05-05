@@ -25,7 +25,7 @@ import {
   Table,
   Divider,
   Popconfirm,
-  // Pagination
+  Pagination
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -43,7 +43,7 @@ Vue.use(Menu)
 Vue.use(Table)
 Vue.use(Divider)
 Vue.use(Popconfirm)
-// Vue.use(Pagination)
+Vue.use(Pagination)
 
 Vue.use(VueMoment)
 Vue.use(vueCookie)

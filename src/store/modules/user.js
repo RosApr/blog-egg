@@ -2,7 +2,7 @@ import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
 import VueCookie from 'vue-cookie'
-import { pagination, roleUser } from '@/assets/config'
+import { pagination, roleUser, roleAnonymous, roleAdmin } from '@/assets/config'
 Vue.use(VueCookie)
 const state = {
     pagination,
@@ -15,7 +15,9 @@ const state = {
     list: []
 }
 const getters = {
-    
+    isLogin: (state, getters, rootGetters) => {
+        return [roleAdmin, roleUser].includes(state.userConfig.role)
+    }
 }
 
 const actions = {
@@ -46,7 +48,7 @@ const actions = {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: `${state.userConfig.role === roleUser ? 'userIndex' : 'adminBlogList'}`})
+                router.push({name: `${state.userConfig.role === roleUser ? 'userBlogList' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -57,18 +59,19 @@ const actions = {
         userApi.register(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: 'userIndex'})
+                router.push({name: 'userBlogList'})
             },
             error => {
                 console.log(error)
             }
         )
     },
-    modifyUserProfile({ commit }, payload={}) {
+    modifyUserProfile({ state, commit }, payload={}) {
         userApi.modifyUserProfile(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
-                router.push({name: `${state.userConfig.role === roleUser ? 'userIndex' : 'adminBlogList'}`})
+                console.log(state.userConfig)
+                router.push({name: `${state.userConfig.role === roleUser ? 'userBlogList' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -79,6 +82,7 @@ const actions = {
         userApi.logout().then(
             () => {
                 commit('setUserState')
+                router.push({name: 'userBlogList'})
             },
             error => {
                 console.log(error)

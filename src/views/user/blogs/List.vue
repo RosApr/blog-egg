@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div style='padding: 0 60px;'>
     <a-list
       itemLayout="vertical"
       size="large"
-      :pagination="pagination"
-      :dataSource="listData"
+      :pagination="false"
+      :dataSource="list"
       >
         <a-list-item slot="renderItem" slot-scope="item, index">
           <a-row>
@@ -13,48 +13,56 @@
               <p>发布时间：{{item.date}}</p>
             </a-col>
             <a-col :span='8'>
-              <router-link :to='{name: "detail", params: {id: item.id}}'>more</router-link>
+              <router-link :to='{name: "blogDetail", params: {id: item.id}}'>more</router-link>
             </a-col>
           </a-row>
         </a-list-item>
+        <a-pagination style='text-align:right;margin-top:20px;'  @change="handlePaginationChange" v-bind='pagination' />
     </a-list>
-    <a-button type="primary" @click='$router.push({name: "userPublish"})' size='large'>发布</a-button>
+    <a-button class='publish-btn' type="primary" @click='goPulish' size='large'>发布</a-button>
   </div>
 </template>
 <script>
-  import postsApi from '@/assets/api/blogs'
+  import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
   export default {
     data () {
       return {
-        listData: [],
-        pagination: {
-            onChange: (page) => {
-                this.$set(this.pagination, 'current', page)
-                const { pageSize, current } = this.pagination
-                this.queryListData({pageSize, current})
-            },
-            pageSize: 10,
-            total: 0,
-            current: 1
-        }
       }
     },
     created() {
-      const { pageSize, current } = this.pagination
-      this.queryListData({
-        size: pageSize,
-        page: current,
-      })
+      this.queryBlogList()
+    },
+    computed: {
+      ...mapState('blog', [
+        'list', 'pagination'
+      ]),
+      ...mapGetters('user', [
+        'isLogin'
+      ])
     },
     methods: {
-      async queryListData(pageConfig) {
-        const { data: { items, total } } = await postsApi.queryPostsList(pageConfig)
-        this.listData = items
-        this.$set(this.pagination, 'total', total)
-      }
+      goPulish() {
+        this.$router.push({name: this.isLogin? 'blogPublish' : '401'})
+      },
+      handlePaginationChange(current) {
+        this.updatePagination({current})
+        this.queryBlogList()
+      },
+      ...mapMutations('blog', [
+        'updatePagination'
+      ]),
+      ...mapActions('blog', [
+        'queryBlogList',
+      ]),
+      
     }
   }
 </script>
 <style scoped lang='less'>
-
+  .publish-btn {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0)
+  }
 </style>

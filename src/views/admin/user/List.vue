@@ -19,7 +19,12 @@
                 dataIndex: 'id',
                 width: '10%',
                 scopedSlots: { customRender: 'id' }
-            },{
+            }, {
+                title: '账号',
+                dataIndex: 'account',
+                width: '20%',
+                scopedSlots: { customRender: 'account' }
+            }, {
                 title: '昵称',
                 dataIndex: 'nickname',
                 width: '20%',

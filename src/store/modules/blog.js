@@ -16,7 +16,9 @@ const state = {
     }
 }
 const getters = {
-
+    pagination: (state, getters, rootState) => {
+        return state.pagination
+    }
 }
 
 const actions = {
@@ -37,7 +39,6 @@ const actions = {
         blogApi.queryPostsDetail(payload)
             .then(
                 ({ msg, data }) => {
-                    console.log(data)
                     commit('updateDetail', data)
                 },
                 error => {
