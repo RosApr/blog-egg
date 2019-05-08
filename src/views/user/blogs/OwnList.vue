@@ -63,7 +63,7 @@
         ]),
     },
     created() {
-        this.queryBlogList()
+        this.queryBlogList({isOwn: 1})
     },
     methods: {
         ...mapActions('blog', [
@@ -76,13 +76,13 @@
         ]),
         handlePaginationChange(pagination) {
             this.updatePagination(pagination)
-            this.queryBlogList()
+            this.queryBlogList({isOwn: 1})
         },
         showBlogDetail(blogId) {
-            this.$router.push({name: 'adminBlogDetail', params: {id: blogId}})
+            this.$router.push({name: 'blogDetail', params: {id: blogId}})
         },
         modifyBlogDetail(blogId) {
-            this.$router.push({name: 'adminBlogUpdate', params: {id: blogId}})
+            this.$router.push({name: 'blogUpdate', params: {id: blogId}})
         }
     },
     }

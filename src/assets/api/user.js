@@ -20,4 +20,10 @@ export default {
     resetUserPwd: (params) => {
         return http.put(`${apiPath.user}/resetPwd`, params)
     },
+    queryStarConfig: () => {
+        return http.get(`${apiPath.user}/star`)
+    },
+    star: ({postId, status}) => {
+        return http.post(`${apiPath.user}/star`, { postId, status })
+    },
 }

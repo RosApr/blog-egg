@@ -14,6 +14,7 @@ import {
   Input,
   Icon,
   Checkbox,
+  Radio,
   Row,
   Col,
   List,
@@ -25,7 +26,8 @@ import {
   Table,
   Divider,
   Popconfirm,
-  Pagination
+  Pagination,
+  Tag
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -33,6 +35,7 @@ Vue.use(Form)
 Vue.use(Input)
 Vue.use(Icon)
 Vue.use(Checkbox)
+Vue.use(Radio)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(List)
@@ -44,6 +47,7 @@ Vue.use(Table)
 Vue.use(Divider)
 Vue.use(Popconfirm)
 Vue.use(Pagination)
+Vue.use(Tag)
 
 Vue.use(VueMoment)
 Vue.use(vueCookie)

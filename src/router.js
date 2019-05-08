@@ -23,6 +23,8 @@ import Error_403 from '@/views/common/error/403'
 import Error_500 from '@/views/common/error/500'
 
 import UserBlogList from '@/views/user/blogs/List'
+import OwnUserBlogList from '@/views/user/blogs/OwnList'
+import StarUserBlogList from '@/views/user/blogs/StarList'
 import BlogPublish from '@/views/common/blogs/Publish'
 import BlogDetail from '@/views/common/blogs/Detail'
 
@@ -45,6 +47,16 @@ export default new Router({
           component: UserBlogList,
         },
         {
+          path: 'own',
+          name: 'userOwnList',
+          component: OwnUserBlogList
+        },
+        {
+          path: 'star',
+          name: 'userStarList',
+          component: StarUserBlogList
+        },
+        {
           path: 'publish',
           name: 'blogPublish',
           component: BlogPublish
@@ -57,7 +69,7 @@ export default new Router({
         {
           path: 'update/:id',
           name: 'blogUpdate',
-          component: BlogDetail
+          component: BlogPublish
         },
       ]
     },

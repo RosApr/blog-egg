@@ -1,8 +1,10 @@
 <template>
     <a-layout-header>
         <div style='float:right;'>
-            <a-dropdown v-if='nickname'>
+            <a-dropdown v-if='isLogin'>
                 <a-menu slot="overlay" @click="handleMenuClick">
+                <a-menu-item v-if='isLoginAndIsRoleUser' @click='page("userOwnList")'>我的发布</a-menu-item>
+                <a-menu-item v-if='isLoginAndIsRoleUser' @click='page("userStarList")'>我的收藏</a-menu-item>
                 <a-menu-item @click='page("profile")'>修改用户信息</a-menu-item>
                 <a-menu-item @click='logout'>退出</a-menu-item>
                 </a-menu>
@@ -22,8 +24,12 @@
         },
         computed: {
             ...mapState('user', {
-                nickname: state => state.userConfig.nickname
-            })
+                nickname: state => state.userConfig.nickname,
+            }),
+            ...mapGetters('user', [
+                'isLoginAndIsRoleUser',
+                'isLogin'
+            ])
         },
         methods: {
             page(name ='index') {

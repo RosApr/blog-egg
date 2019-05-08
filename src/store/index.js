@@ -11,6 +11,7 @@ const debug = process.env.NODE_ENV !== 'production'
 const initUserProfile = store => {
     const _userProfile = Vue.cookie.get('userProfile') || ''
     if(_userProfile && _userProfile != 'undefined') {
+        store.dispatch('user/queryStarConfig')
         store.replaceState(
             Object.assign({}, store.state, {
                 user: {
@@ -22,16 +23,20 @@ const initUserProfile = store => {
         )
     }
     store.subscribe((mutation, state) => {
-        if(mutation.type.includes('user')) {
-            if(mutation.type === 'user/logout') {
-                Vue.cookie.delete('userProfile')
+        const mutationType = mutation.type
+        const mutationPayload = mutation.payload
+        if(mutationType=== 'user/setUserState') {
+            if(mutationPayload) {
+                Vue.cookie.set('userProfile', JSON.stringify(mutationPayload), { expires: '1h' })
             } else {
-                Vue.cookie.set('userProfile', JSON.stringify(mutation.payload), { expires: '1h' })
+                Vue.cookie.delete('userProfile')
             }
         }
     })
 }
-
+const initCategoryList = store => {
+    store.dispatch('categories/queryCategoryList', {})
+}
 export default new Vuex.Store({
     modules: {
         user,
@@ -39,5 +44,5 @@ export default new Vuex.Store({
         categories
     },
     strict: debug,
-    plugins: [ initUserProfile ]
+    plugins: [ initUserProfile, initCategoryList ]
 })

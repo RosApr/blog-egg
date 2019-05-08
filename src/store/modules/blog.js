@@ -1,5 +1,5 @@
 import blogApi from '@/assets/api/blogs'
-import Vue from 'vue'
+import VueInstance from '@/main'
 import router from '@/router'
 import { pagination } from '@/assets/config'
 const state = {
@@ -12,7 +12,8 @@ const state = {
         date: '',
         pv: '',
         nickname: '',
-        category: ''
+        categoryId: '',
+        star: ''
     }
 }
 const getters = {
@@ -22,9 +23,9 @@ const getters = {
 }
 
 const actions = {
-    queryBlogList({ commit, state }) {
+    queryBlogList({ commit, state }, payload = {}) {
         const {pagination: { current, pageSize }} = state
-        blogApi.queryPostsList({ current, pageSize })
+        blogApi.queryPostsList({ current, pageSize, ...payload })
             .then(
                 ({ msg, data: { items, total }}) => {
                     commit('updateList', {items})
@@ -50,7 +51,9 @@ const actions = {
         blogApi.createPosts(payload)
             .then(
                 ({}) => {
-
+                    VueInstance.$message.success('发布成功', 2, () => {
+                        router.go(-1)    
+                    })
                 },
                 error => {
 
@@ -115,7 +118,8 @@ const mutations = {
         date: '',
         pv: '',
         owner: '',
-        category: ''
+        category: '',
+        star: ''
     }) {
         state.detail = {
             ...state.detail,

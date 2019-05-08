@@ -1,9 +1,7 @@
 import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
-import VueCookie from 'vue-cookie'
 import { pagination, roleUser, roleAnonymous, roleAdmin } from '@/assets/config'
-Vue.use(VueCookie)
 const state = {
     pagination,
     userConfig: {
@@ -12,11 +10,18 @@ const state = {
         account: '',
         nickname: ''
     },
-    list: []
+    list: [],
+    starConfig: {
+        items: [],
+        total: 0
+    }
 }
 const getters = {
     isLogin: (state, getters, rootGetters) => {
         return [roleAdmin, roleUser].includes(state.userConfig.role)
+    },
+    isLoginAndIsRoleUser: (state, getters, rootGetters) => {
+        return getters['isLogin'] && state.userConfig.role == roleUser
     }
 }
 
@@ -44,10 +49,11 @@ const actions = {
                 }
             )
     },
-    login({ commit, state }, payload={}) {
+    login({ commit, state, dispatch }, payload={}) {
         userApi.login(payload).then(
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
+                dispatch('queryStarConfig')
                 router.push({name: `${state.userConfig.role === roleUser ? 'userBlogList' : 'adminBlogList'}`})
             },
             error => {
@@ -89,12 +95,50 @@ const actions = {
             }
         )
     },
+    queryStarConfig({ commit, state }) {
+        userApi.queryStarConfig()
+            .then(
+                ({data: { items, total }}) => {
+                    commit('updateStarConfig', {items, total})
+                },
+                error => {
+
+                }
+            )
+    },
+    star({commit, state }, payload = {postId: '', status: 0}) {
+        userApi.star(payload)
+            .then(
+                () => {
+                    commit('blog/updateDetail', {star: payload.status}, { root: true })
+                    let starList = state.starConfig.items.slice()
+                    let  total = state.starConfig.total
+                    if(payload.status === 0) {
+                        starList.splice(starList.findIndex(item => item == payload.postId), 1)
+                        total -= 1
+                    } else {
+                        starList.push(payload.postId)
+                        total += 1
+                    }
+                    commit('updateStarConfig', {items: starList, total: total})
+                },
+                error => {
+
+                }
+            )
+    }
 }
   
 const mutations = {
     setUserState(state, payload={id: '', role: '', account: '', nickname: ''}) {
         state.userConfig = {
             ...state.userConfig,
+            ...payload
+        }
+    },
+    updateStarConfig(state, payload = {items: [], total: 0}) {
+        state.starConfig = {
+            ...state.starConfig,
             ...payload
         }
     },

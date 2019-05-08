@@ -4,33 +4,49 @@
         @submit="handleSubmit"
     >
         <a-form-item
-        label="title"
-        :label-col="{ span: 5 }"
-        :wrapper-col="{ span: 12 }"
+            label="分类"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
+            class='category-container'
+            >
+            <a-radio-group v-decorator="['categoryId',
+                {
+                    initialValue: currCategory
+                }
+            ]" buttonStyle="solid">
+                <a-radio-button v-for='(item, index) in categoryList' :key='index' :value="item.id">{{item.name}}</a-radio-button>
+            </a-radio-group>
+        </a-form-item>
+        <a-form-item
+            label="title"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
         >
         <a-input
             v-decorator="[
             'title',
-            {rules: [{ required: true, message: 'Please input your title!' }],
-            initialValue: detail.title || ''}
+            {
+                rules: [{ required: true, message: 'Please input your title!' }],
+                initialValue: detail.title || ''}
             ]"
         />
         </a-form-item>
         <a-form-item
-        label="content"
-        :label-col="{ span: 5 }"
-        :wrapper-col="{ span: 12 }"
+            label="content"
+            :label-col="{ span: 5 }"
+            :wrapper-col="{ span: 12 }"
         >
         <a-input
             v-decorator="[
             'content',
-            {rules: [{ required: true, message: 'Please input your content!' }],
-            initialValue: detail.content || ''}
+            {
+                rules: [{ required: true, message: 'Please input your content!' }],
+                initialValue: detail.content || ''}
             ]"
         />
         </a-form-item>
         <a-form-item
-        :wrapper-col="{ span: 12, offset: 5 }"
+            :wrapper-col="{ span: 12, offset: 5 }"
         >
         <a-button
             type="primary"
@@ -42,32 +58,50 @@
     </a-form>
 </template>
 <script>
-    import { mapState, mapActions } from 'vuex'
+    import { mapState, mapActions, mapGetters } from 'vuex'
     export default {
         data () {
             return {
-                formLayout: 'horizontal',
                 form: this.$form.createForm(this),
+                id: this.$route.params.id,
+                currCategory: undefined
             };
         },
         computed: {
             ...mapState('blog', [
                 'detail'
-            ])
+            ]),
+            ...mapState('categories', {
+                categoryList(state) {
+                    this.currCategory = state.list.length > 0 ? +state.list[0].id : ''
+                    if(this.detail.categoryId) {
+                        this.currCategory = +this.detail.categoryId
+                    }
+                    return state.list
+                },
+            })
         },
         created() {
-            this.queryBlogDetail({id: this.$route.params.id})
+            if(this.id) {
+                this.queryBlogDetail({id: this.id})
+            }
         },
         methods: {
             ...mapActions('blog', [
                 'queryBlogDetail',
-                'modifyBlog'
+                'modifyBlog',
+                'createBlog'
             ]),
             handleSubmit (e) {
                 e.preventDefault();
                 this.form.validateFields(async (err, values) => {
                     if (!err) {
-                        this.modifyBlog({...values, ...{id: this.detail.id}})
+                        if(this.id) {
+                            this.modifyBlog({...values, ...{id: this.detail.id}})
+                        } else {
+                            this.createBlog({...values})
+                        }
+                        
                     }
                 });
             },
@@ -75,5 +109,9 @@
     };
 </script>
 <style scoped lang='less'>
-    
+    .category-container {
+        .ant-form-item-control {
+            text-align: left;
+        }
+    }
 </style>

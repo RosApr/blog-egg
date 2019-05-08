@@ -4,11 +4,7 @@
             <div class='editable-row-operations'>
                 <a-button type='default' @click='showBlogDetail(record.id)'>查看</a-button>
                 <a-divider type="vertical" />
-                <a-button type='primary' @click='modifyBlogDetail(record.id)'>修改</a-button>
-                <a-divider type="vertical" />
-                <a-popconfirm :title="`确认要删除《${record.title}》?`" @confirm="delBlog({id: record.id})" @cancel="() => {}" okText="确定" cancelText="取消">
-                    <a-button type='danger'>删除</a-button>
-                </a-popconfirm>
+                <a-button type='default' @click='star({postId: record.id, status: 0})'>取消收藏</a-button>
             </div>
         </template>
     </a-table>
@@ -63,7 +59,7 @@
         ]),
     },
     created() {
-        this.queryBlogList()
+        this.queryBlogList({star: 1})
     },
     methods: {
         ...mapActions('blog', [
@@ -74,15 +70,15 @@
         ...mapMutations('blog', [
             'updatePagination'
         ]),
+        ...mapActions('user', [
+            'star',
+        ]),
         handlePaginationChange(pagination) {
             this.updatePagination(pagination)
-            this.queryBlogList()
+            this.queryBlogList({star: 1})
         },
         showBlogDetail(blogId) {
-            this.$router.push({name: 'adminBlogDetail', params: {id: blogId}})
-        },
-        modifyBlogDetail(blogId) {
-            this.$router.push({name: 'adminBlogUpdate', params: {id: blogId}})
+            this.$router.push({name: 'blogDetail', params: {id: blogId}})
         }
     },
     }

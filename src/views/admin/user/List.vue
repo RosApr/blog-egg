@@ -50,7 +50,7 @@
         },
         computed: {
             ...mapState('user', [
-                'list', 'pagination'
+                'list', 'pagination',
             ]),
         },
         created() {

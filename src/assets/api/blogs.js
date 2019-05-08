@@ -9,19 +9,16 @@ export default {
         return http.get(`${apiPath.posts}/${id}`)
     },
     createPosts: (params) => {
-        return http.post(`${apiPath.posts}`, { params })
+        return http.post(`${apiPath.posts}`, params)
     },
-    modifyPosts: ({ id, ...params }) => {
-        return http.put(`${apiPath.posts}/${id}`, {...{id}, ...params })
+    modifyPosts: (params) => {
+        return http.put(`${apiPath.posts}/${params.id}`, params)
     },
     delPosts: ({ id }) => {
         return http.delete(`${apiPath.posts}/${id}`)
     },
     addPostsPv: ({ id }) => {
         return http.get(`${apiPath.posts}/${id}/pv`)
-    },
-    favoritePosts: ({ id, status }) => {
-        return http.post(`${apiPath.posts}/${id}/favorite`, status)
     },
     search: ({ params }) => {
         return http.get(`${apiPath.posts}`, { params })
