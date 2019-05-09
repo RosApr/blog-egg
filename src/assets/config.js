@@ -1,6 +1,8 @@
-export const roleAdmin = 'root'
-export const roleUser = 'user'
-export const roleAnonymous = 'anonymous'
+export const ROLE = {
+    admin: 'root',
+    user: 'user',
+    anonymous: 'anonymous',
+}
 export const pagination = {
     total: 0,
     current: 1,

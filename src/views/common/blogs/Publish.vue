@@ -58,7 +58,7 @@
     </a-form>
 </template>
 <script>
-    import { mapState, mapActions, mapGetters } from 'vuex'
+    import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
     export default {
         data () {
             return {
@@ -84,9 +84,14 @@
         created() {
             if(this.id) {
                 this.queryBlogDetail({id: this.id})
+            } else {
+                this.updateDetail()
             }
         },
         methods: {
+            ...mapMutations('blog', [
+                'updateDetail'
+            ]),
             ...mapActions('blog', [
                 'queryBlogDetail',
                 'modifyBlog',

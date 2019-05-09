@@ -21,32 +21,32 @@
             const columns = [{
                 title: '名称',
                 dataIndex: 'title',
-                width: '25%',
+                // width: '25%',
                 scopedSlots: { customRender: 'title' }
             },{
                 title: '博客分类',
                 dataIndex: 'category',
-                width: '10%',
+                // width: '10%',
                 scopedSlots: { customRender: 'category' }
             }, {
                 title: '发布人',
                 dataIndex: 'nickname',
-                width: '15%',
+                // width: '15%',
                 scopedSlots: { customRender: 'nickname' }
             }, {
                 title: '发布日期',
                 dataIndex: 'date',
-                width: '20%',
+                // width: '20%',
                 customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
             }, {
                 title: '浏览量',
                 dataIndex: 'pv',
-                width: '8%',
+                // width: '8%',
                 scopedSlots: { customRender: 'pv' }
             }, {
                 title: '收藏数',
                 dataIndex: 'star',
-                width: '8%',
+                // width: '8%',
                 scopedSlots: { customRender: 'star' }
             }, {
                 title: '操作',

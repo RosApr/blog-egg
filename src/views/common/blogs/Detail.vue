@@ -6,9 +6,9 @@
         <div>发布时间：{{detail.date | moment(timeFormat)}}</div>
         <div>浏览量：{{detail.pv}}次</div>
         <div v-if='detail.nickname'>发布人：{{detail.nickname}}</div>
-        <a-row v-if='isLogin' type="flex" justify="center" align="middle">
+        <a-row v-if='isLoginAndIsRoleUser' type="flex" justify="center" align="middle">
             <a-col :span="24" style='text-align:center;'>
-                <a-button @click='star({postId: detail.id, status: +!detail.star})'>{{starText}}</a-button>
+                <a-button @click='star({postId: detail.id, status: +!detail.star, flag: false})'>{{starText}}</a-button>
             </a-col>
         </a-row>
         <a-row type="flex" justify="center" align="middle">
@@ -32,7 +32,7 @@
                 return this.detail.star ? '取消收藏' : '收藏'
             },
             ...mapGetters('user', [
-                'isLogin'
+                'isLoginAndIsRoleUser'
             ]),
             ...mapState('blog', [
                 'detail'

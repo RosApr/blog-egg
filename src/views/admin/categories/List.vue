@@ -28,17 +28,17 @@
             const columns = [{
                 title: 'id',
                 dataIndex: 'id',
-                width: '8%',
+                // width: '8%',
                 scopedSlots: { customRender: 'id' }
             },{
                 title: '名称',
                 dataIndex: 'name',
-                width: '15%',
+                // width: '15%',
                 scopedSlots: { customRender: 'name' }
             }, {
                 title: '发布日期',
                 dataIndex: 'date',
-                width: '25%',
+                // width: '25%',
                 customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
             }, {
                 title: '操作',

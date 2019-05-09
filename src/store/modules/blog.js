@@ -117,7 +117,7 @@ const mutations = {
         content: '',
         date: '',
         pv: '',
-        owner: '',
+        nickname: '',
         category: '',
         star: ''
     }) {

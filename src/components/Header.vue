@@ -1,5 +1,8 @@
 <template>
     <a-layout-header>
+        <div style='float:left;'>
+            <router-link :to='{name: logoLink}'>首页</router-link>
+        </div>
         <div style='float:right;'>
             <a-dropdown v-if='isLogin'>
                 <a-menu slot="overlay" @click="handleMenuClick">
@@ -23,12 +26,20 @@
             return {}
         },
         computed: {
+            logoLink() {
+                if(this.isLoginAndIsRoleAdmin) {
+                    return 'adminBlogList'
+                } else {
+                    return 'userBlogList'
+                }
+            },
             ...mapState('user', {
                 nickname: state => state.userConfig.nickname,
             }),
             ...mapGetters('user', [
                 'isLoginAndIsRoleUser',
-                'isLogin'
+                'isLogin',
+                'isLoginAndIsRoleAdmin'
             ])
         },
         methods: {

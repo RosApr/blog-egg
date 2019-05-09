@@ -17,27 +17,27 @@
             const columns = [{
                 title: 'id',
                 dataIndex: 'id',
-                width: '10%',
+                // width: '10%',
                 scopedSlots: { customRender: 'id' }
             }, {
                 title: '账号',
                 dataIndex: 'account',
-                width: '20%',
+                // width: '20%',
                 scopedSlots: { customRender: 'account' }
             }, {
                 title: '昵称',
                 dataIndex: 'nickname',
-                width: '20%',
+                // width: '20%',
                 scopedSlots: { customRender: 'nickname' }
             }, {
                 title: '注册日期',
                 dataIndex: 'date',
-                width: '20%',
+                // width: '20%',
                 customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
             }, {
                 title: '发布博客数',
                 dataIndex: 'count',
-                width: '10%',
+                // width: '10%',
                 scopedSlots: { customRender: 'count' }
             }, {
                 title: '操作',

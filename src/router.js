@@ -28,9 +28,12 @@ import StarUserBlogList from '@/views/user/blogs/StarList'
 import BlogPublish from '@/views/common/blogs/Publish'
 import BlogDetail from '@/views/common/blogs/Detail'
 
+
+import { ROLE } from '@/assets/config'
+import VuexInstance from '@/store/index'
 Vue.use(Router)
 
-export default new Router({
+const _router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -49,17 +52,20 @@ export default new Router({
         {
           path: 'own',
           name: 'userOwnList',
-          component: OwnUserBlogList
+          component: OwnUserBlogList,
+          meta: { requiresAuth: true, role: [ ROLE.user ] }
         },
         {
           path: 'star',
           name: 'userStarList',
-          component: StarUserBlogList
+          component: StarUserBlogList,
+          meta: { requiresAuth: true, role: [ ROLE.user ] }
         },
         {
           path: 'publish',
           name: 'blogPublish',
-          component: BlogPublish
+          component: BlogPublish,
+          meta: { requiresAuth: true, role: [ ROLE.user ] }
         },
         {
           path: 'detail/:id',
@@ -69,7 +75,8 @@ export default new Router({
         {
           path: 'update/:id',
           name: 'blogUpdate',
-          component: BlogPublish
+          component: BlogPublish,
+          meta: { requiresAuth: true, role: [ ROLE.user, ROLE.admin ] }
         },
       ]
     },
@@ -78,6 +85,7 @@ export default new Router({
       path: '/admin',
       name: 'adminIndex',
       component: AdminView,
+      meta: { requiresAuth: true, role: [ ROLE.admin ] },
       children: [
         {
           path: 'blogs',
@@ -89,7 +97,7 @@ export default new Router({
               path: 'list',
               alias: '',
               name: 'adminBlogList',
-              component: AdminBlogsList
+              component: AdminBlogsList,
             },
             {
               path: 'detail/:id',
@@ -160,7 +168,8 @@ export default new Router({
         {
           path: 'profile',
           name: 'profile',
-          component: Profile
+          component: Profile,
+          meta: { requiresAuth: true, role: [ ROLE.admin, ROLE.user ] },
         },
         {
           path: 'register',
@@ -198,3 +207,44 @@ export default new Router({
     }
   ]
 })
+
+_router.beforeEach((to, from, next) => {
+  const metaConfig = to.matched.filter(record => record.meta.requiresAuth)
+  console.log(metaConfig)
+  if(metaConfig.length === 0) {
+    next()
+  } else {
+    const needRoleArray = metaConfig[0]['meta']['role']
+    if(needRoleArray.length === 2) {
+      if(VuexInstance.getters['user/isLogin']) {
+        next()
+      } else {
+        next({
+          name: 'login'
+        })
+      }
+    } else {
+      needRoleArray.forEach((role) => {
+        if(role === ROLE.user) {
+          if(VuexInstance.getters['user/isLoginAndIsRoleUser']) {
+            next()
+          } else {
+            next({
+              name: 'login'
+            })
+          }
+        } else if(role === ROLE.admin){
+          if(VuexInstance.getters['user/isLoginAndIsRoleAdmin']) {
+            next()
+          } else {
+            next({
+              name: 'login'
+            })
+          }
+        }
+      })
+    }
+  }
+})
+
+export default _router

@@ -1,7 +1,7 @@
 import userApi from '@/assets/api/user'
 import Vue from 'vue'
 import router from '@/router'
-import { pagination, roleUser, roleAnonymous, roleAdmin } from '@/assets/config'
+import { pagination, ROLE } from '@/assets/config'
 const state = {
     pagination,
     userConfig: {
@@ -18,10 +18,13 @@ const state = {
 }
 const getters = {
     isLogin: (state, getters, rootGetters) => {
-        return [roleAdmin, roleUser].includes(state.userConfig.role)
+        return [ROLE.admin, ROLE.user].includes(state.userConfig.role)
     },
     isLoginAndIsRoleUser: (state, getters, rootGetters) => {
-        return getters['isLogin'] && state.userConfig.role == roleUser
+        return getters['isLogin'] && state.userConfig.role == ROLE.user
+    },
+    isLoginAndIsRoleAdmin: (state, getters, rootGetters) => {
+        return getters['isLogin'] && state.userConfig.role == ROLE.admin
     }
 }
 
@@ -54,7 +57,7 @@ const actions = {
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
                 dispatch('queryStarConfig')
-                router.push({name: `${state.userConfig.role === roleUser ? 'userBlogList' : 'adminBlogList'}`})
+                router.push({name: `${state.userConfig.role === ROLE.user ? 'userBlogList' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -77,7 +80,7 @@ const actions = {
             ({ data: userProfile }) => {
                 commit('setUserState', userProfile)
                 console.log(state.userConfig)
-                router.push({name: `${state.userConfig.role === roleUser ? 'userBlogList' : 'adminBlogList'}`})
+                router.push({name: `${state.userConfig.role === ROLE.user ? 'userBlogList' : 'adminBlogList'}`})
             },
             error => {
                 console.log(error)
@@ -106,7 +109,7 @@ const actions = {
                 }
             )
     },
-    star({commit, state }, payload = {postId: '', status: 0}) {
+    star({commit, state, rootState, dispatch }, payload = {postId: '', status: 0, flag: false}) {
         userApi.star(payload)
             .then(
                 () => {
@@ -119,6 +122,9 @@ const actions = {
                     } else {
                         starList.push(payload.postId)
                         total += 1
+                    }
+                    if(payload.flag) {
+                        dispatch('blog/queryBlogList', {star: 1}, {root: true})
                     }
                     commit('updateStarConfig', {items: starList, total: total})
                 },
