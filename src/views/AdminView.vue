@@ -7,16 +7,17 @@
           mode="inline"
           :defaultSelectedKeys="[active]"
           :defaultOpenKeys="[]"
+          :selectedKeys='[active]'
           :style="{ height: '100%', borderRight: 0, paddingTop: '24px' }"
           @click='handleMenuClick'
         >
-          <a-menu-item key="blogs" pathName='adminBlogList'>
+          <a-menu-item key="adminBlogList">
             <span><a-icon type="table" />文章管理</span>
           </a-menu-item>
-          <a-menu-item key="categories" pathName='adminCategoriesList'>
+          <a-menu-item key="adminCategoriesList">
             <span><a-icon type="profile" />类目管理</span>
           </a-menu-item>
-          <a-menu-item key="users" pathName='adminUserList'>
+          <a-menu-item key="adminUserList">
             <span><a-icon type="user" />用户管理</span>
           </a-menu-item>
         </a-menu>
@@ -49,7 +50,7 @@
             }
         },
         created() {
-          this.active = this.$route.path.split('/')[2]
+          this.active = this.$route.name
         },
         mounted() {
             this.$vuebar.refreshScrollbar(this.$refs.scrollDom, {
@@ -57,9 +58,14 @@
                 preventParentScroll: true
             })
         },
+        watch: {
+          '$route'(newval, oldval) {
+            this.active = newval.name
+          }
+        },
         methods: {
             handleMenuClick({item, key, keyPath}) {
-                this.$router.push({name: item.$attrs.pathName})
+              this.$router.push({name: key})
             }
         },
         components: {

@@ -210,7 +210,6 @@ const _router = new Router({
 
 _router.beforeEach((to, from, next) => {
   const metaConfig = to.matched.filter(record => record.meta.requiresAuth)
-  console.log(metaConfig)
   if(metaConfig.length === 0) {
     next()
   } else {
