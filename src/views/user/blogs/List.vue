@@ -80,9 +80,14 @@
     },
     methods: {
       filterListByCategory(categoryId) {
+        if(categoryId == this.activeCategoryId) return
+        let currCategoryId = ''
+        if(categoryId != 0) {
+          currCategoryId = categoryId
+        }
         this.activeCategoryId = categoryId
         this.updatePagination({current: 1})
-        this.queryBlogList({categoryId: this.activeCategoryId})
+        this.queryBlogList({categoryId: currCategoryId})
       },
       goPulish() {
         this.$router.push({name: this.isLogin? 'blogPublish' : '401'})

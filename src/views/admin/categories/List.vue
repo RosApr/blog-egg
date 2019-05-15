@@ -37,9 +37,9 @@
                 scopedSlots: { customRender: 'name' }
             }, {
                 title: '发布日期',
-                dataIndex: 'date',
+                dataIndex: 'updated_at',
                 // width: '25%',
-                customRender: (text, record, index) => this.$moment(record.date).format(timeFormat)
+                customRender: (text, record, index) => this.$moment(record.updated_at).format(timeFormat)
             }, {
                 title: '操作',
                 dataIndex: 'operation',

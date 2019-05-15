@@ -11,11 +11,14 @@ const debug = process.env.NODE_ENV !== 'production'
 const initUserProfile = store => {
     const _userProfile = Vue.cookie.get('userProfile') || ''
     if(_userProfile && _userProfile != 'undefined') {
-        store.dispatch('user/queryStarConfig')
+        let _userProfileObject = JSON.parse(_userProfile)
+        if(_userProfileObject.role == 'user') {
+            store.dispatch('user/queryStarConfig')
+        }
         store.replaceState(
             Object.assign({}, store.state, {
                 user: {
-                    userConfig: JSON.parse(_userProfile),
+                    userConfig: _userProfileObject,
                     pagination,
                     list: []
                 }

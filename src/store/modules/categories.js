@@ -1,7 +1,7 @@
 import categoryApi from '@/assets/api/categories'
 import Vue from 'vue'
 import router from '@/router'
-import { pagination } from '@/assets/config'
+import { pagination, ROLE } from '@/assets/config'
 const state = {
     list: [],
     pagination,
@@ -17,11 +17,15 @@ const getters = {
 }
 
 const actions = {
-    queryCategoryList({ commit, state }, payload = {}) {
+    queryCategoryList({ commit, state, rootState }, payload = {}) {
         const { pagination: { current, pageSize }} = state
         categoryApi.queryCategoriesList({current, pageSize})
             .then(
                 ({msg, data: { items, total }}) => {
+                    
+                    if(rootState.user.userConfig.role === ROLE.user) {
+                        items.splice(0, 0, {id: 0, name: '全部'})
+                    }
                     commit('updateList', {items})
                     commit('updatePagination', {total})
                 },
