@@ -27,7 +27,8 @@ import {
   Divider,
   Popconfirm,
   Pagination,
-  Tag
+  Tag,
+  Badge
  } from 'ant-design-vue';
 Vue.use(Button)
 Vue.use(Layout)
@@ -48,6 +49,7 @@ Vue.use(Divider)
 Vue.use(Popconfirm)
 Vue.use(Pagination)
 Vue.use(Tag)
+Vue.use(Badge)
 
 Vue.use(VueMoment)
 Vue.use(vueCookie)
@@ -61,6 +63,9 @@ Message.config({
 })
 Vue.prototype.$message = Message
 Vue.config.productionTip = false
+
+import io from 'socket.io-client'
+Vue.prototype.$io = io
 
 export default new Vue({
   router,

@@ -37,11 +37,13 @@
         </a-layout-footer>
       </a-layout>
     </a-layout>
+    <ChatModel />
   </a-layout>
 </template>
 <script>
     import CopyRight from '@/components/Footer'
     import Header from '@/components/Header'
+    import ChatModel from '@/components/ChatModel.vue'
     export default {
         data() {
             return {
@@ -53,10 +55,10 @@
           this.active = this.$route.name
         },
         mounted() {
-            this.$vuebar.refreshScrollbar(this.$refs.scrollDom, {
-                scrollThrottle: 30,
-                preventParentScroll: true
-            })
+          this.$vuebar.refreshScrollbar(this.$refs.scrollDom, {
+            scrollThrottle: 30,
+            preventParentScroll: true
+          })
         },
         watch: {
           '$route'(newval, oldval) {
@@ -70,7 +72,8 @@
         },
         components: {
             CopyRight,
-            Header
+            Header,
+            ChatModel
         }
     }
 </script>

@@ -9,11 +9,13 @@
         <a-layout-footer style="text-align: center">
             <CopyRight />
         </a-layout-footer>
+        <ChatModel />
     </a-layout>
 </template>
 <script>
     import CopyRight from '@/components/Footer'
     import Header from '@/components/Header'
+    import ChatModel from '@/components/ChatModel.vue'
     export default {
         data() {
             return {
@@ -25,7 +27,8 @@
         },
         components: {
             CopyRight,
-            Header
+            Header,
+            ChatModel
         }
     }
 </script>

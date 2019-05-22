@@ -28,7 +28,6 @@ import StarUserBlogList from '@/views/user/blogs/StarList'
 import BlogPublish from '@/views/common/blogs/Publish'
 import BlogDetail from '@/views/common/blogs/Detail'
 
-
 import { ROLE } from '@/assets/config'
 import VuexInstance from '@/store/index'
 Vue.use(Router)

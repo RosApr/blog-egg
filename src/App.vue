@@ -18,7 +18,7 @@
     },
     created() {
       this.isLogin = !!this.$cookie.get('nickname')
-      bus.$on('toggleLoadingModal', (loadingStatus=true) => {
+      bus.$on('toggleLoadingModal', (loadingStatus = true) => {
         this.showLoading = loadingStatus
       })
     },
